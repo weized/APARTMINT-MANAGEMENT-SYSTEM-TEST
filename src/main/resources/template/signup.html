@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/signupstyle.css">
+</head>
+
+<style>
+    input[type="text"],
+    input[type="date"],
+    input[type="email"],
+    input[type="submit"],
+    input[type="tel"],
+    input[type="password"],
+    select {
+        width: 200px;
+        padding: 5px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        border: solid rgb(37,61,144);
+        box-sizing: border-box;
+        font-family: 'Poppins', 'sans-serif';
+        font-size: 15px;
+        height: 45px;
+        width: 300px;
+    }
+</style>
+<body>
+<h1>
+    Apartment Management System
+</h1>
+<p>
+    Description...to follow
+</p>
+<div class="signup">
+    <div id="houselogo">
+        <img src="OOP_Icon-removebg-preview (1) 1.png" alt="logo" class="logo" width="350" height="300">
+    </div>
+    <form >
+        <h1 id="resgitertext">
+            Register
+        </h1>
+        <p id="registeracc">
+            Register your account
+        </p><br><br><br><br><br><br><br><br><br>
+        <div class="row">
+            <div class="column">
+                <div class="input-box2">
+                    <label for="fname">First Name </label>
+                    <input type="text"  id="fname" name="fname" required/>
+                </div>
+            </div>
+            <div class="column">
+                <div class="input-box2">
+                    <label for="lname">Last Name </label>
+                    <input type="text"  id="lname" name="lname" required/>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <div class="input-box2">
+                    <label for="Middlename">Middle Name </label>
+                    <input type="text"  id="Middlename" name="Middlename" required/>
+                </div>
+            </div>
+            <div class="column">
+                <div class="input-box2">
+                    <label for="gender" >Gender</label>
+                    <select id="gender" name="gender">
+                        <option value="<Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Member of a LGBTQ+">Member of a LGBTQ+</option>
+                        <option value="Prefer not to say">Prefer not to say</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <div class="input-box2">
+                    <label for="date" >Birthday  </label>
+                    <input type="date"  id="date" name="date" required/>
+                </div>
+            </div>
+            <div class="column">
+                <div class="input-box2">
+                    <label for="email" >Email address  </label>
+                    <input type="email"  id="email" name="email" required/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <div class="input-box2">
+                    <label for="number" >Phone Number  </label>
+                    <input type="tel"  pattern="[0-9]{11}" maxlength="11" id="number" name="number" required/>
+                </div>
+            </div>
+            <div class="column">
+                <div class="input-box2">
+                    <label for="Uname">Username </label>
+                    <input type="text"  id="Uname" name="Uname" required/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <div class="input-box2">
+                    <label for="password">Password </label>
+                    <input type="password"  id="password" name="password" required/>
+                </div>
+            </div>
+        </div>
+        <div class="login">
+            <button id="loginbutton" type="submit">Create Account</button>
+            <p>
+                <small id="already">Already have an account?
+                    <a href="login.html">Log In  </a> </small>
+            </p>
+        </div>
+    </form>
+</div>
+</body>
+</html>
