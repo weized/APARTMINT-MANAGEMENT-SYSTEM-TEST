@@ -20,6 +20,31 @@ public class User {
 
     @Getter
     @Setter
+    @Column(nullable = false, unique = true, length = 30)
+    private String username;
+
+    @Getter
+    @Setter
+    @Column(nullable = false, length = 25)
+    private String middleName;
+
+    @Getter
+    @Setter
+    @Column(nullable = false, length = 10)
+    private String gender;
+
+    @Getter
+    @Setter
+    @Column(nullable = false, length = 20)
+    private String birthday;
+
+    @Getter
+    @Setter
+    @Column(nullable = false, length = 11)
+    private String phoneNumber;
+
+    @Getter
+    @Setter
     @Column(nullable = false, unique = true, length = 50)
     private String email;
 

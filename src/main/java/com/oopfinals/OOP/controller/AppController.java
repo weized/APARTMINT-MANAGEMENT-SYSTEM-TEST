@@ -37,17 +37,28 @@ public class AppController {
     }
 
     @PostMapping("/process_register")
-    public String processRegistration(@ModelAttribute User user) {
-        // Encode the password before saving
-        user.setPassword(passwordEncoder.encode(user.getPassword())); // Encode the password
-        repo.save(user); // Save the user to the database
+    public String processRegistration(@ModelAttribute User user, Model model) {
+        // Check if username or email already exists
+        if (repo.existsByUsername(user.getUsername())) {
+            model.addAttribute("usernameError", "Username is already taken.");
+            return "signup_form"; // Replace with your actual form view name
+        }
+
+        if (repo.existsByEmail(user.getEmail())) {
+            model.addAttribute("emailError", "Email is already registered.");
+            return "signup_form";
+        }
+
+        // Encode the password and save
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        repo.save(user);
         return "register_success";
     }
 
     @PostMapping("/process_login")
     public String processLogin(@ModelAttribute User user, Model model) {
-        // Find the user by email
-        User existingUser  = repo.findByEmail(user.getEmail());
+        // Find the user by username
+        User existingUser  = repo.findByUsername(user.getUsername());
 
         // Check if the user exists and if the password matches
         if (existingUser  != null && passwordEncoder.matches(user.getPassword(), existingUser .getPassword())) {
@@ -59,4 +70,6 @@ public class AppController {
             return "login_form"; // Return to login form with error
         }
     }
+
+
 }

@@ -12,12 +12,16 @@
     <form action = '#' th:action="@{/process_login}" method="post" th:object="${user}">
         <div>
             <div class="form-group row">
-                <label> Email address</label>
-                <input type="email" id="email" th:field="*{email}" required/>
+                <label>Username</label>
+                <input type="text" id="username" th:field="*{username}" required/>
             </div>
             <div class="form-group row">
-                <label> Password</label>
+                <label>Password</label>
                 <input type="password" id="password" th:field="*{password}" required/>
+            </div>
+            <!-- Display error message if it exists -->
+            <div th:if="${error}" class="alert alert-danger">
+                <span th:text="${error}"></span>
             </div>
             <button type="Login" class="btn btn-primary">Login</button>
         </div>

@@ -27,9 +27,14 @@ public class UserRepositoryTests {
     public void testCreateUser() {
         User user = new User();
         user.setEmail("testemail2@yahoo.com");
-        user.setPassword("password2");
-        user.setFirstName("asd");
-        user.setLastName("qwerty");
+        user.setPassword("testpass2");
+        user.setFirstName("testfirst2");
+        user.setLastName("testlast2");
+        user.setMiddleName("testmid2");
+        user.setGender("gayy");
+        user.setBirthday("2000-06-13");
+        user.setUsername("testuser2");
+        user.setPhoneNumber("09991234322");
 
         User savedUser = repo.save(user);
 
