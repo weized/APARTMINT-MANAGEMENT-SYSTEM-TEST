@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    box-sizing: border-box;
+    position: relative;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: rgba(37, 61, 144, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 730px;
+    margin: 0;
+    background-image: url('https://www.onlygfx.com/wp-content/uploads/2021/04/white-triangle-pattern-seamless-background-1.jpg');
+    background-size: 100%;
+    background-blend-mode: multiply;
+    position: relative;
+}
+
+
+.signup{
+    background-color: WHITE;
+    height: 101vh;
+    width:125vh ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#houselogo{
+    position: fixed;
+    top: -50px;
+    margin-top: 1px;
+    margin-right: 360px;
+}
+
+
+#loginbutton{
+    background-color:rgb(37,61,144) ;
+    width: 300px;
+    height: 45px;
+    color: white;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.row{
+    display: flex;
+    gap: 20px;
+
+
+}
+.column{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.input-box2{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 5px;
+}
+
+.login{
+    align-content: center;
+    text-align: center;
+}
+
+#resgitertext{
+    color:rgb(37,61,144) ;
+    text-align: right;
+    font-size: 40px;
+    margin-left: 826px;
+    margin-top: -70px;
+    position: fixed;
+    bottom: 550px;
+    left: -42px;
+    font-weight: calc(750);
+}
+
+#registeracc{
+    color:gray ;
+    text-align: right;
+    margin-left: 820px;
+    margin-top: -80px;
+    position: fixed;
+    bottom: 540px;
+    left: -35px;
+}
+
+#already{
+    color:gray ;
+    margin-top: 10px;
+    text-align: center;
+}

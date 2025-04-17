@@ -32,15 +32,16 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/","/index","/signup_form","/process_register","/login_form","/process_login").permitAll() // Allow access to these endpoints
+                        .requestMatchers("/","/index","/signup","/process_register","/login","/process_login","/images/**","/css/**","/js/**","/webjars/**").permitAll() // Allow access to these endpoints
                         .anyRequest().authenticated() // All other requests require authentication
                 )
                 .formLogin(form -> form
-                        .loginPage("/login_form") // Custom login page
+                        .loginPage("/login") // Custom login page
                         .permitAll() // Allow everyone to see the login page
                 )
                 .logout(LogoutConfigurer::permitAll // Allow everyone to log out

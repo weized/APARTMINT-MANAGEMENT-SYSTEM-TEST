@@ -19,21 +19,21 @@ public class AppController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @GetMapping("/index")
+    @GetMapping("/")
     public String redirectToHomePage() {
-        return "redirect:/"; // Redirects to the root URL
+        return "redirect:/login"; // Redirects to the root URL
     }
 
-    @GetMapping("/signup_form")
-    public String showSignUpForm(Model model){
+    @GetMapping("/signup")
+    public String showSignpp(Model model){
         model.addAttribute("user", new User());
-        return "signup_form";
+        return "signup";
     }
-
-    @GetMapping("/login_form")
-    public String showLoginForm(Model model){
+    @GetMapping("/login")
+    public String showLogin(Model model){
         model.addAttribute("user", new User());
-        return "login_form";
+        return "login";
+
     }
 
     @PostMapping("/process_register")
@@ -41,18 +41,18 @@ public class AppController {
         // Check if username or email already exists
         if (repo.existsByUsername(user.getUsername())) {
             model.addAttribute("usernameError", "Username is already taken.");
-            return "signup_form"; // Replace with your actual form view name
+            return "signup"; // Replace with your actual form view name
         }
 
         if (repo.existsByEmail(user.getEmail())) {
             model.addAttribute("emailError", "Email is already registered.");
-            return "signup_form";
+            return "signup";
         }
 
         // Encode the password and save
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         repo.save(user);
-        return "register_success";
+        return "login";
     }
 
     @PostMapping("/process_login")
@@ -63,11 +63,11 @@ public class AppController {
         // Check if the user exists and if the password matches
         if (existingUser  != null && passwordEncoder.matches(user.getPassword(), existingUser .getPassword())) {
             // Successful login
-            return "test"; // Redirect to home page or dashboard
+            return "landlordmenupage"; // Redirect to home page or dashboard
         } else {
             // Failed login
             model.addAttribute("error", "Invalid email or password.");
-            return "login_form"; // Return to login form with error
+            return "login"; // Return to login form with error
         }
     }
 
