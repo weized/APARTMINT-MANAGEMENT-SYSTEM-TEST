@@ -1,146 +1,183 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
-  <link rel="stylesheet" href="../static/loginstyle.css" th:href="@{/loginstyle.css}"  />
+  <title>Login</title>
+  <link rel="stylesheet" href="../static/loginstyle.css" th:href="@{/loginstyle.css}" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      height: 100vh;
+      background-color: #f5f7fa;
+    }
+
+    .login {
+      background-color: white;
+      width: 100%;
+      max-width: 650px;
+      padding: 40px 30px;
+      background-image: url('https://www.onlygfx.com/wp-content/uploads/2021/04/white-triangle-pattern-seamless-background-1.jpg');
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .loginbg {
+      flex: 1;
+      background-color: rgb(37,61,144);
+    }
+
+    #houselogo img {
+      margin-left: 5%;
+      width: 15%;
+      height: auto;
+    }
+
+    .h1login {
+      margin-left: 5%;
+      font-size: 36px;
+      font-weight: 700;
+      color: rgb(37,61,144);
+      margin-top: 0%;
+    }
+
+    #logindescription {
+      color: gray;
+      margin-bottom: 30px;
+    }
+
+    .input-box1 {
+      margin-bottom: 30px;
+      text-align: center;
+
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin-bottom: 8px;
+      color: rgb(37,61,144);
+      font-weight: 600;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 90%;
+      padding: 12px;
+      font-size: 15px;
+      border-radius: 5px;
+      justify-content: center;
+      border: 2px solid rgb(37,61,144);
+    }
+
+    #submitbutton {
+      background-color: rgb(37,61,144);
+      width: 90%;
+      height: 45px;
+      color: white;
+      border-radius: 5px;
+      font-size: 15px;
+      border: none;
+      margin-top: 10px;
+      margin-left: auto;
+      margin-right: auto; /* Add these */
+      display: block;
+      cursor: pointer;
+    }
+
+    .register {
+      color: gray;
+      margin-top: 10px;
+      text-align: center;
+
+    }
+
+    .register a {
+      color: rgb(37,61,144);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .login {
+        max-width: 100%;
+        padding: 30px 20px;
+      }
+
+      #houselogo img {
+        width: 150px;
+      }
+
+      .h1login {
+        font-size: 28px;
+      }
+
+      input[type="text"],
+      input[type="password"],
+      #submitbutton {
+        font-size: 14px;
+    }
+
+    @media (max-width: 480px) {
+      .h1login {
+        font-size: 24px;
+      }
+
+      #logindescription {
+        font-size: 14px;
+        margin-left: 5%;
+      }
+
+      .register {
+        font-size: 13px;
+      }
+    }
+    }
+  </style>
 </head>
-
-
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-  input[type="text"],
-  input[type="password"],
-  input[type="submit"],
-  select {
-    width: 200px;
-    padding: 5px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-    font-family: 'Poppins', 'sans-serif';
-    font-size: 15px;
-    border-radius: 5px;
-    border: solid rgb(37,61,144);
-  }
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f5f7fa;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
-
-  .loginbg{
-    background-color: rgb(37,61,144);
-  }
-  .h1login{
-    text-align: left;
-    font-size: 40px;
-    margin-left: 120px;
-    margin-top: -70px;
-    position: fixed;
-    bottom: 480px;
-    left: -42px;
-    font-weight: calc(750);
-
-
-  }
-  .login{
-    background-color: white;
-    height: 100vh;
-    width:90vh ;
-    color: rgb(37,61,144);
-    align-content: center;
-    align-items: center;
-    text-align: center;
-    background-image: url('https://www.onlygfx.com/wp-content/uploads/2021/04/white-triangle-pattern-seamless-background-1.jpg');
-    background-size: 150%;
-  }
-
-  #houselogo{
-    position: fixed;
-    top: 20px;
-    left: 34px;
-  }
-
-  #logindescription{
-    color: gray;
-    position: fixed;
-    bottom: 470px;
-    left: 80px;
-  }
-
-
-  .input-box1{
-    text-align: left;
-    margin-left: 80px;
-  }
-
-  #submitbutton{
-    background-color:rgb(37,61,144) ;
-    width: 500px;
-    height: 45px;
-    color: white;
-    border-radius: 5px;
-    font-size: 15px;
-  }
-  .register{
-    color: gray;
-    text-decoration: none;
-    text-decoration-color: white;
-  }
-
-  .signupbody{
-    align-items: center ;
-    align-content: center;
-  }
-</style>
-
-
-<body class="loginbg">
-
+<body>
 <div class="login">
   <div id="houselogo">
-    <img th:src="@{/images/AMS_logo.png}" alt="logo"  width="350" height="300">
+    <img th:src="@{/images/logo.png}" alt="logo">
   </div>
 
-  <form action = '#' th:action="@{/process_login}" method="post" th:object="${user}" >
-
-    <h1 class="h1login">
-      Login
-    </h1>
+  <form action="#" th:action="@{/process_login}" method="post" th:object="${user}">
+    <h1 class="h1login">Login</h1>
     <div id="logindescription">
-      <p>Login to your account.</p>
+      <p style="margin-left: 5%;">Login to your account.</p>
     </div>
-    <br><br><br><br><br><br><br>
-    <div class="input-box1">
-      <label for="userName"> Email address or Username </label><br>
-      <input type="text"
-             style="width: 500px;
-             height: 45px"
-             id="userName"
-             name="userName" th:field="*{username}" required/> <br><br>
-    </div>
-    <div class="input-box1">
-      <label for="passWord"> Password</label><br>
-      <input type="password"
-             style="width: 500px;
-             height: 45px"
-             id="passWord"
-             name="passWord" th:field="*{password}" required/><br><br><br><br>
-    </div>
-    <div class="register">
-      <small>Don't have an account yet?
-        <a href="/signup"><strong>Register.</strong>  </a> </small> <br>
-      <button id="submitbutton" type="submit" >Sign in</button>
-    </div>
-  </form>
 
+    <div class="input-box1">
+      <label for="userName" style="margin-left: 5%;" >Username</label>
+      <input type="text" id="userName" name="userName" th:field="*{username}" required />
+    </div>
+
+    <div class="input-box1">
+      <label for="passWord" style="margin-left: 5%;" >Password</label>
+      <input type="password" id="passWord" name="passWord" th:field="*{password}" required />
+    </div><br>
+
+    <div class="register">
+      <small >Don't have an account yet?
+        <a href="/signup"><strong>Register.</strong></a>
+      </small>
+    </div>
+
+    <button id="submitbutton" type="submit">Sign in</button>
+  </form>
 </div>
+
+<div class="loginbg"></div>
 </body>
 </html>
