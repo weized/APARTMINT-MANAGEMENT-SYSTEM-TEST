@@ -1,9 +1,11 @@
 package com.oopfinals.OOP.security;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import com.oopfinals.OOP.model.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomUserDetails implements UserDetails {
@@ -15,7 +17,7 @@ public class CustomUserDetails implements UserDetails {
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
-        return null;
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getAccount_role().toUpperCase()));
     }
 
     @Override
@@ -27,6 +29,7 @@ public class CustomUserDetails implements UserDetails {
     public String getUsername(){
         return user.getEmail();
     }
+
 
     @Override
     public boolean isAccountNonExpired(){
@@ -47,6 +50,7 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled(){
         return true;
     }
+
 
 
 }

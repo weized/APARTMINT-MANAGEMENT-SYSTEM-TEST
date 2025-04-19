@@ -49,6 +49,7 @@ public class AppController {
             return "signup";
         }
 
+        user.setAccount_role("tenant");
         // Encode the password and save
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         repo.save(user);
@@ -58,12 +59,16 @@ public class AppController {
     @PostMapping("/process_login")
     public String processLogin(@ModelAttribute User user, Model model) {
         // Find the user by username
-        User existingUser  = repo.findByUsername(user.getUsername());
+        User existingUser = repo.findByUsername(user.getUsername());
 
         // Check if the user exists and if the password matches
-        if (existingUser  != null && passwordEncoder.matches(user.getPassword(), existingUser .getPassword())) {
+        if (existingUser != null && passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
             // Successful login
-            return "landlordmenupage"; // Redirect to home page or dashboard
+            if("tenant".equalsIgnoreCase(existingUser.getAccount_role())){
+                return "tenantmenupage"; // Redirect to home page or dashboard
+            } else {
+                return "landlordmenupage";
+            }
         } else {
             // Failed login
             model.addAttribute("error", "Invalid email or password.");

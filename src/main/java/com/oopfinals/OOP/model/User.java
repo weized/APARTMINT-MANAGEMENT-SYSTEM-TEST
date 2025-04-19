@@ -63,4 +63,8 @@ public class User {
     @Column(nullable = false, length = 25)
     private String lastName;
 
+    @Getter
+    @Setter
+    @Column(nullable = false, length = 10)
+    private String account_role;
 }
