@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Apartment Information</title>
+    <style>
+        /* General body setup */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #cce9f9;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #0c1c3d;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px 0;
+            height: 100vh;
+            position: fixed;
+        }
+
+        .sidebar .user-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .user-info img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .sidebar .features {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar .feature-link {
+            background-color: transparent;
+            text-decoration: none;
+            padding: 15px 20px;
+            text-align: left;
+            width: 82%;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            display: block;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .sidebar .feature-link.active {
+            background-color: #ffcf00;
+            color: white;
+            border-left: 5px solid #0c1c3d;
+        }
+
+        .sidebar .logout {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px;
+            width: calc(100% - 40px);
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar .logout:hover {
+            background-color: darkred;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            padding: 20px;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background-color: #ffc107;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* Card layout */
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        table th, table td {
+            padding: 12px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #ffca28;
+            color: black;
+            font-weight: bold;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        table td ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        table td ul li {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* View Tenants Button */
+        .btn {
+            background-color: #ffc402;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #e6b800;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="user-info">
+        <img src="user-avatar.jpg" alt="User Avatar">
+        <h3>Mr Landlord</h3>
+    </div>
+    <div class="features">
+        <a href="/landlord/apartment-info" class="feature-link active">Apartment Information</a>
+        <a href="/landlord/payments" class="feature-link">Manage Payments</a>
+        <a href="/landlord/complaints" class="feature-link">View Complaints</a>
+        <a href="/landlord/announcements" class="feature-link">Announcements</a>
+        <a href="/landlord/revenue" class="feature-link">Revenue</a>
+    </div>
+    <form th:action="@{/logout}" method="post">
+        <button class="logout" type="submit">Logout</button>
+    </form>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="breadcrumb">Dashboard / Apartment Information</div>
+
+    <!-- Apartment Information Table -->
+    <div class="card">
+        <h2>Apartment Information</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Room</th>
+                <th>Price</th>
+                <th>Max Tenants</th>
+                <th>Regulations</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="room : ${rooms}">
+                <td th:text="${room.roomNumber}"></td> <!-- Display Room Number -->
+                <td th:text="${room.rent}"></td> <!-- Display Rent -->
+                <td th:text="${room.maxTenants}"></td> <!-- Display Max Tenants -->
+                <td>
+                    <ul>
+                        <!-- Displaying Regulations for Each Room -->
+                        <li th:each="reg : ${room.regulations}" th:text="${reg.description}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <!-- View Tenants Button -->
+                    <a th:href="@{/landlord/room-tenants/{id}/tenants(id=${room.id})}" class="btn">View Tenants</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add New Regulation Form -->
+    <div class="card">
+        <h2>Add New Regulation</h2>
+        <form th:action="@{/landlord/add-regulation}" method="post">
+            <label for="roomId">Select Room:</label>
+            <select id="roomId" name="roomId" required>
+                <option value="" disabled selected>Select a Room or All</option>
+                <option value="all">All Rooms</option>
+                <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.roomNumber}"></option>
+            </select>
+
+            <label for="description">Regulation Description:</label>
+            <input type="text" id="description" name="description" required placeholder="Enter regulation...">
+
+            <button type="submit">Add Regulation</button>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

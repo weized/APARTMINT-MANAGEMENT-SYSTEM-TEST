@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Landlord Menu Development</title>
+    <link rel="stylesheet" th:href="@{/css/landlordstyle.css}">
+</head>
+<body>
+<div class="container">
+    <nav class="sidebar">
+        <img src="/images/avatar.png" alt="User Avatar" class="avatar">
+        <h2 th:text="${userName}">John Doe</h2>
+        <ul class="menu">
+            <li><a th:href="@{/landlord/apartment}">Apartment Information</a></li>
+            <li><a th:href="@{/landlord/payments}">Manage Payments</a></li>
+            <li><a th:href="@{/landlord/complaints}">View Complaints</a></li>
+            <li><a th:href="@{/landlord/announcements}">Announcements</a></li>
+            <li><a th:href="@{/landlord/revenue}">Revenue</a></li>
+        </ul>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </nav>
+
+    <main class="content">
+        <div th:replace="~{::section}">
+            <!-- Content goes here -->
+        </div>
+    </main>
+</div>
+</body>
+</html>

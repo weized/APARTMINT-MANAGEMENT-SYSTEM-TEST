@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Landlord Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background-color: #e3f2fd;
+            color: #000;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: #0d1b2a;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            color: white;
+            padding: 30px 20px;
+        }
+
+        .sidebar h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar small {
+            font-size: 14px;
+            color: #b0bec5;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 30px;
+        }
+
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            display: block;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .sidebar ul li a:hover,
+        .sidebar ul li a.active {
+            background-color: #1b263b;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: 40px;
+        }
+
+        .main-content h1 {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .menu-boxes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .box {
+            background-color: white;
+            border-radius: 16px;
+            padding: 30px 20px;
+            width: 260px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+        }
+
+        .box h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .box a {
+            text-decoration: none;
+            color: #0d47a1;
+            font-weight: 600;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <h2>Mr Landlord<br><small>Apartment Owner</small></h2>
+    <ul>
+        <li><a href="/landlord/apartment">Apartment Information</a></li>
+        <li><a href="/landlord/payments">Manage Payments</a></li>
+        <li><a href="/landlord/complaints">Complaints</a></li>
+        <li><a href="/landlord/announcements">Announcements</a></li>
+        <li><a href="/landlord/revenue">Revenue</a></li>
+    </ul>
+</div>
+<div class="main-content">
+    <h1>Welcome to Your Landlord Dashboard!</h1>
+    <div class="menu-boxes">
+        <div class="box">
+            <h3>Apartment Information</h3>
+            <a href="/landlord/apartment">View details of apartment, list of occupants, etc.</a>
+        </div>
+        <div class="box">
+            <h3>Manage Payments</h3>
+            <a href="/landlord/payments">List of payments received, list of overdue payments</a>
+        </div>
+        <div class="box">
+            <h3>View Complaints</h3>
+            <a href="/landlord/complaints">View tenant complaints and maintenance requests</a>
+        </div>
+        <div class="box">
+            <h3>Announcements</h3>
+            <a href="/landlord/announcements">Post announcements for a specific tenant or all tenants</a>
+        </div>
+        <div class="box">
+            <h3>Revenue</h3>
+            <a href="/landlord/revenue">View revenue from all rooms, total revenue per room</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

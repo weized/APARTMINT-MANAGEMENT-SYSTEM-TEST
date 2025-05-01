@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tenants of Room</title>
+    <style>
+        /* General body setup */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #cce9f9;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #0c1c3d;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px 0;
+            height: 100vh;
+            position: fixed;
+        }
+
+        .sidebar .user-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .user-info img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .sidebar .features {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar .feature-link {
+            background-color: transparent;
+            text-decoration: none;
+            padding: 15px 20px;
+            text-align: left;
+            width: 82%;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            display: block;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            padding: 20px;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background-color: #ffc107;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* Card layout */
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        table th, table td {
+            padding: 12px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #ffca28;
+            color: black;
+            font-weight: bold;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="user-info">
+        <img src="user-avatar.jpg" alt="User Avatar">
+        <h3>Mr Landlord</h3>
+    </div>
+    <div class="features">
+        <a href="/landlord/apartment-info" class="feature-link">Apartment Information</a>
+        <a href="/landlord/payments" class="feature-link">Manage Payments</a>
+        <a href="/landlord/complaints" class="feature-link">View Complaints</a>
+        <a href="/landlord/announcements" class="feature-link">Announcements</a>
+        <a href="/landlord/revenue" class="feature-link">Revenue</a>
+    </div>
+    <form th:action="@{/logout}" method="post">
+        <button class="logout" type="submit">Logout</button>
+    </form>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="breadcrumb">Dashboard / Tenants of Room <span th:text="${room.roomNumber}"></span></div>
+
+    <!-- Tenants Table -->
+    <div class="card">
+        <h2>Tenants in Room <span th:text="${room.roomNumber}"></span></h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tenant : ${room.tenants}">
+                <td th:text="${tenant.name}"></td>
+                <td th:text="${tenant.phoneNumber}"></td>
+                <td th:text="${tenant.email}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

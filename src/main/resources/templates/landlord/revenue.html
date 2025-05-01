@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Revenue</title>
+    <style>
+        /* SAME sidebar and card STYLE as your other pages */
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #cce9f9; display: flex; }
+        .sidebar { width: 250px; background-color: #0c1c3d; color: white; display: flex; flex-direction: column; justify-content: space-between; padding: 20px 0; height: 100vh; position: fixed; }
+        .sidebar .user-info { text-align: center; margin-bottom: 20px; }
+        .sidebar .user-info img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 10px; }
+        .sidebar .features button { background-color: transparent; color: white; border: none; padding: 15px 20px; text-align: left; width: 100%; font-size: 16px; cursor: pointer; }
+        .sidebar .features button.active, .sidebar .features button:hover { background-color: #ffca28; color: black; }
+        .sidebar .logout { background-color: red; color: white; border: none; padding: 10px 20px; font-weight: bold; cursor: pointer; margin: 20px; }
+        .main-content { margin-left: 250px; width: calc(100% - 250px); padding: 20px; }
+        .breadcrumb { background-color: #ffc107; padding: 10px 20px; font-weight: bold; }
+        .card { background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-top: 20px; }
+        form { margin-bottom: 20px; }
+        .sidebar .logout {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px;
+            width: calc(100% - 40px);
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar .logout:hover {
+            background-color: darkred;
+        }
+        select, button.submit-btn {
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button.submit-btn {
+            background-color: #ffca28;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button.submit-btn:hover {
+            background-color: #e6b800;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="user-info">
+        <img src="user-avatar.jpg" alt="User Avatar">
+        <h3>Mr Landlord</h3>
+    </div>
+    <div class="features">
+        <button><a href="/landlord/apartment" style="color: white; text-decoration: none;">Apartment Information</a></button>
+        <button><a href="/landlord/payments" style="color: white; text-decoration: none;">Manage Payments</a></button>
+        <button><a href="/landlord/complaints" style="color: white; text-decoration: none;">View Complaints</a></button>
+        <button><a href="/landlord/announcements" style="color: white; text-decoration: none;">Announcements</a></button>
+        <button class="active"><a href="/landlord/revenue" style="color: white; text-decoration: none;">Revenue</a></button>
+    </div>
+    <form th:action="@{/logout}" method="post">
+        <button class="logout" type="submit">Logout</button>
+    </form>
+</div>
+
+<div class="main-content">
+    <div class="breadcrumb">Dashboard / Revenue</div>
+
+    <div class="card">
+        <h2>Revenue Overview</h2>
+
+        <!-- Revenue Filter -->
+        <form method="get" th:action="@{/landlord/revenue}">
+            <select name="type">
+                <option value="monthly" th:selected="${type == 'monthly'}">Monthly</option>
+                <option value="yearly" th:selected="${type == 'yearly'}">Yearly</option>
+            </select>
+            <button type="submit" class="submit-btn">View</button>
+        </form>
+
+        <!-- Revenue Display -->
+        <h3>Total <span th:text="${type == 'monthly' ? 'Monthly' : 'Annual'}"></span> Revenue:</h3>
+        <h1 th:text="'₱' + ${revenue}"></h1>
+    </div>
+</div>
+
+</body>
+</html>

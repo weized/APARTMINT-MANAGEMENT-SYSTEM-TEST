@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tenants Filed Leave</title>
+</head>
+<body>
+<h1>Tenants who filed for leave</h1>
+<table border="1">
+    <tr>
+        <th>Tenant Name</th>
+        <th>Email</th>
+    </tr>
+    <tr th:each="tenant : ${tenantsWithLeave}">
+        <td th:text="${tenant.name}"></td>
+        <td th:text="${tenant.email}"></td>
+    </tr>
+</table>
+</body>
+</html>

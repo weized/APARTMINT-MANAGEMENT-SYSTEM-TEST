@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Announcements</title>
+    <style>
+        /* SAME STYLE AS BEFORE (sidebar, card, table) */
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #cce9f9; display: flex; }
+        .sidebar { width: 250px; background-color: #0c1c3d; color: white; display: flex; flex-direction: column; justify-content: space-between; padding: 20px 0; height: 100vh; position: fixed; }
+        .sidebar .user-info { text-align: center; margin-bottom: 20px; }
+        .sidebar .user-info img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 10px; }
+        .sidebar .features button { background-color: transparent; color: white; border: none; padding: 15px 20px; text-align: left; width: 100%; font-size: 16px; cursor: pointer; }
+        .sidebar .features button.active, .sidebar .features button:hover { background-color: #ffca28; color: black; }
+        .sidebar .logout { background-color: red; color: white; border: none; padding: 10px 20px; font-weight: bold; cursor: pointer; margin: 20px; }
+        .main-content { margin-left: 250px; width: calc(100% - 250px); padding: 20px; }
+        .breadcrumb { background-color: #ffc107; padding: 10px 20px; font-weight: bold; }
+        .card { background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background-color: white; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        table th, table td { padding: 12px 20px; text-align: left; border-bottom: 1px solid #ddd; }
+        table th { background-color: #ffca28; color: black; font-weight: bold; }
+        table tr:hover { background-color: #f1f1f1; }
+        form { margin-bottom: 20px; }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button.submit-btn {
+            background-color: #ffca28;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button.submit-btn:hover {
+            background-color: #e6b800;
+        }
+        .sidebar .logout {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px;
+            width: calc(100% - 40px);
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar .logout:hover {
+            background-color: darkred;
+        }
+        .message {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success {
+            background-color: #28a745;
+            color: white;
+        }
+        .error {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <div class="user-info">
+        <img src="user-avatar.jpg" alt="User Avatar">
+        <h3>Mr Landlord</h3>
+    </div>
+    <div class="features">
+        <button><a href="/landlord/apartment-info" style="color: white; text-decoration: none;">Apartment Information</a></button>
+        <button><a href="/landlord/payments" style="color: white; text-decoration: none;">Manage Payments</a></button>
+        <button><a href="/landlord/complaints" style="color: white; text-decoration: none;">View Complaints</a></button>
+        <button class="active"><a href="/landlord/announcements" style="color: white; text-decoration: none;">Announcements</a></button>
+        <button><a href="/landlord/revenue" style="color: white; text-decoration: none;">Revenue</a></button>
+    </div>
+    <form th:action="@{/logout}" method="post">
+        <button class="logout" type="submit">Logout</button>
+    </form>
+</div>
+
+<div class="main-content">
+    <div class="breadcrumb">Dashboard / Announcements</div>
+
+    <!-- Display Success/Error Message -->
+    <div th:if="${successMessage}" class="message success" th:text="${successMessage}"></div>
+    <div th:if="${error}" class="message error" th:text="${error}"></div>
+
+    <!-- Create New Announcement -->
+    <div class="card">
+        <h2>Create New Announcement</h2>
+        <form th:action="@{/landlord/announcements}" method="post">
+            <label for="description">Announcement Description:</label>
+            <input type="text" id="description" name="description" required placeholder="Enter announcement details...">
+
+            <label for="target">Target Audience:</label>
+            <select id="target" name="target" required>
+                <option value="" disabled selected>Select Target Audience</option>
+                <option value="all">Everyone</option>
+                <option value="notice">Room Notice</option>
+                <option value="rules">Room Rules</option>
+                <option disabled>────────────</option>
+                <option th:each="room : ${rooms}" th:value="${room.name}" th:text="${'Room ' + room.name}"></option>
+            </select>
+
+            <button type="submit" class="submit-btn">Post Announcement</button>
+        </form>
+    </div>
+
+    <!-- Display All Announcements -->
+    <div class="card">
+        <h2>All Announcements</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Description</th>
+                <th>Target</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="announcement : ${announcements}">
+                <!--/*@thymesVar id="description" type=""*/-->
+                <td th:text="${announcement.description}"></td>
+                <td th:text="${announcement.target == 'all' ? 'Everyone' : (announcement.target == 'notice' ? 'Room Notice' : 'Room Rules')}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

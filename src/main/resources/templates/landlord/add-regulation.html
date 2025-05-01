@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Regulation</title>
+</head>
+<body>
+<h2>Add Regulation to Room</h2>
+<form th:action="@{/landlord/rooms/regulations}" method="post" th:object="${regulation}">
+    <label>Select Room:</label>
+    <select name="roomId">
+        <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+    </select>
+    <br/><br/>
+
+    <label>Regulation Description:</label><br/>
+    <textarea th:field="*{description}"></textarea><br/><br/>
+
+    <button type="submit">Add Regulation</button>
+</form>
+</body>
+</html>

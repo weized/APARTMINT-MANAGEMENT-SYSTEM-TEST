@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Room Tenants</title>
+</head>
+<body>
+<h2>Tenants in this Room</h2>
+<ul>
+    <li th:each="tenant : ${tenants}" th:text="${tenant.name}"></li>
+</ul>
+<a href="/landlord/apartment-info">← Back</a>
+</body>
+</html>

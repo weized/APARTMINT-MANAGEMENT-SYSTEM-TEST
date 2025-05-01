@@ -65,9 +65,9 @@ public class AppController {
         if (existingUser != null && passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
             // Successful login
             if("tenant".equalsIgnoreCase(existingUser.getAccount_role())){
-                return "tenantmenupage"; // Redirect to home page or dashboard
+                return "/tenant/tenant-index"; // Redirect to home page or dashboard
             } else {
-                return "landlordmenupage";
+                return "/landlord/landlordmenupage";
             }
         } else {
             // Failed login

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Announcements</title>
+  <link rel="stylesheet" th:href="@{/sidebar.css}">
+</head>
+<body>
+<div th:replace="~{tenant/tenant-sidebar-button :: sidebarBtn}"></div>
+<div th:replace="~{tenant/tenant-sidebar :: sidebarMenu}"></div>
+
+<div>
+  <button onclick="showSection('all')">All</button>
+  <button onclick="showSection('notice')">Room Notice</button>
+  <button onclick="showSection('rules')">Room Rules</button>
+</div>
+
+<div id="all">
+  <h3>All Announcements</h3>
+  <div th:each="a : ${allAnnouncements}" style="border: 1px solid #ccc; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #f9f9f9;">
+    <div><strong th:text="${a.title}"></strong></div>
+    <div th:text="${a.message }" style="margin: 10px 0;"></div>
+    <div style="font-size: 0.9em; color: gray;" th:text="${#temporals.format(a.postedAt, 'MMMM dd, yyyy')}"></div>
+  </div>
+</div>
+
+
+<div id="notice" style="display:none;">
+  <h3>Room Notices</h3>
+  <div th:each="n : ${roomNotices}" style="border: 1px solid #ccc; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #f9f9f9;">
+    <div><strong th:text="${n.title}"></strong></div>
+    <div th:text="${n.content}" style="margin: 10px 0;"></div>
+    <div style="font-size: 0.9em; color: gray;" th:if="${n.postedAt != null}" th:text="${n.postedAt}"></div>
+  </div>
+</div>
+
+<div id="rules" style="display:none;">
+  <h3>Room Rules</h3>
+  <div th:each="r : ${roomRules}" style="border: 1px solid #ccc; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #f9f9f9;">
+    <div><strong th:text="${r.title}"></strong></div>
+    <div th:text="${r.content}" style="margin: 10px 0;"></div>
+    <div style="font-size: 0.9em; color: gray;" th:if="${r.postedAt != null}" th:text="${r.postedAt}"></div>
+  </div>
+</div>
+
+<script>
+  function showSection(id) {
+    document.getElementById('all').style.display = 'none';
+    document.getElementById('notice').style.display = 'none';
+    document.getElementById('rules').style.display = 'none';
+    document.getElementById(id).style.display = 'block';
+  }
+</script>
+
+<script th:src="@{/sidebar.js}"></script>
+
+</body>
+</html>
