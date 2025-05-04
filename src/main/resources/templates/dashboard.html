@@ -2,9 +2,86 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="/src/main/resources/static/dashboard.css">
 </head>
 <body>
+
+<!-- CONTENT SIDEBAR-->
+<div class="sidebar" id="sidebar">
+  <div class="profile">
+    <div class="logo">[Logo here]</div>
+    <div class="user-info">
+      <div class="avatar"></div>
+      <div>
+        <strong>Juan Dela Cruz</strong><br>
+        Room 4
+      </div>
+    </div>
+  </div>
+
+  <!--LINKS MENU-->
+  <div class="menu-links">
+    <a href="dashboard.html" class="active">Dashboard</a>
+    <a href="announcements.html">Announcements</a>
+    <a href="payments.html">Payments</a>
+    <a href="reports.html">Reports</a>
+    <a href="leave-request.html">Leave Request</a>
+  </div>
+
+  <div class="logout">
+    <button>Log out</button>
+  </div>
+</div>
+
+<!-- BUTTON SIDEBAR -->
+<div class="hamburger" onclick="toggleSidebar()">
+  <img src="/src/main/resources/static/images/sidebar.svg" alt="Sidebar Menu" style="width: 335px; height: 25px;">
+</div>
+
+
+<!--MAIN MENU-->
+<div class="header">Main Menu</div>
+
+<div class="container">
+  <div class="content">
+    <h1>Welcome to Apartmint chuchu!</h1>
+    <p class="subtitle">Organize and manage your apartment details, payments, and more all in one place.</p>
+
+    <div class="menu-links1">
+      <div class="card">
+        <a href="announcements.html"><strong>Announcements</strong></a>
+        <p>View general and room announcements.</p>
+      </div>
+
+      <div class="menu-links1">
+        <div class="card">
+          <a href="payments.html"><strong>View Payments</strong></a>
+          <p>View payment history and its details.</p>
+        </div>
+
+        <div class="menu-links1">
+          <div class="card">
+            <a href="reports.html"><strong>Add Complaint</strong></a>
+            <p>Add and submit complaints or concerns with regards to the apartment.</p>
+          </div>
+
+          <div class="menu-links1">
+            <div class="card">
+              <a href="leave-request.html"><strong>Leave Request</strong></a>
+              <p>Submit leave application and track its status.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- JavaScript -->
+        <script>
+          function toggleSidebar() {
+              const sidebar = document.getElementById('sidebar');
+              sidebar.classList.toggle('active');
+          }
+        </script>
+
 
 </body>
 </html>
