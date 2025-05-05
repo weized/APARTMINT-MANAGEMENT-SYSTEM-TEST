@@ -64,11 +64,42 @@
         </div>
     </div>
 
-
-
+<!--YELLOW TAB-->
     <div id="breadcrumb" class="breadcrumb">Announcements &gt; All</div>
 
+    <!-- All Announcements -->
+    <div id="all-section" class="announcement-section">
+        <div style="background-color: white; color: #121C3E; padding: 20px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+            <h2>[TITLE HERE]</h2>
+            <div style="background-color: #dfeaff; padding: 10px; border-radius: 10px;">
+                <p style="font-size: 14px; color: #121C3E;">[DATE HERE]</p>
+                <p>[CONTENT HERE]</p>
+            </div>
+        </div>
+    </div>
 
+
+    <!-- Room Notice Announcements -->
+    <div id="room-notice-section" class="announcement-section" style="display: none;">
+        <div style="background-color: white; color: #121C3E; padding: 20px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+            <h2>[TITLE HERE]</h2>
+            <div style="background-color: #dfeaff; padding: 10px; border-radius: 10px;">
+                <p style="font-size: 14px; color: #121C3E;">[DATE HERE]</p>
+                <p>[CONTENT HERE]</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Room Rules Announcements -->
+    <div id="room-rules-section" class="announcement-section" style="display: none;">
+        <div style="background-color: white; color: #121C3E; padding: 20px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+            <h2>[TITLE HERE]</h2>
+            <div style="background-color: #dfeaff; padding: 10px; border-radius: 10px;">
+                <p style="font-size: 14px; color: #121C3E;">[DATE HERE]</p>
+                <p>[CONTENT HERE]</p>
+            </div>
+        </div>
+    </div>
     <div class="content" id="contentArea"></div>
 </div>
 
@@ -80,11 +111,37 @@
     }
 
     function switchTab(tabName, button) {
+        // Activate the selected button
         document.querySelectorAll('.announcement-tabs button').forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
+
+// CHANGE BREADCRUMB
         document.getElementById('breadcrumb').innerHTML = `Announcements &gt; ${tabName}`;
+
+//HIDE SECTION
+        document.querySelectorAll('.announcement-section').forEach(section => {
+            section.style.display = 'none';
+        });
+
+// SHOW BUTTON SELECT
+        if (tabName === 'All') {
+            document.getElementById('all-section').style.display = 'block';
+        } else if (tabName === 'Room Notice') {
+            document.getElementById('room-notice-section').style.display = 'block';
+        } else if (tabName === 'Room Rules') {
+            document.getElementById('room-rules-section').style.display = 'block';
+        }
     }
+
+    // DEFAULT SHOW ALL BUTTON
+    window.onload = () => {
+        const defaultButton = document.querySelector('.announcement-tabs button.active');
+        if (defaultButton) {
+            switchTab('All', defaultButton);
+        }
+    };
 </script>
+
 
 </body>
 </html>

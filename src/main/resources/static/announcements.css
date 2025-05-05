@@ -1,3 +1,4 @@
+/* General body layout */
 body {
     margin: 0;
     padding: 0;
@@ -6,9 +7,9 @@ body {
     background-size: cover;
     color: white;
     height: 100vh;
-    overflow-x: hidden;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .header {
@@ -20,22 +21,16 @@ body {
     padding: 20px;
     width: 100%;
     transition: margin-left 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto; /* Center horizontally */
-    position: relative;
 }
 .sidebar.active ~ .container {
-    margin-left: 100px;
+    margin-left: 230px;
 }
 
 .sidebar ~ .container {
     margin-left: 0;
 }
-
 .content {
-    max-width: 1000px;
+    max-width: 600px;
     margin: auto;
 }
 
@@ -197,14 +192,37 @@ h1 {
 
 .breadcrumb {
     background-color: #f1c40f;
-    padding: 12px 20px;
+    padding: 12px 230px;
     font-weight: bold;
     color: black;
     font-size: 16px;
     border-radius: 6px;
     margin: 20px auto 10px;
-    width: fit-content;
+    width: max-content;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.announcement-box {
+    background-color: white;
+    color: #121C3E;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 85%;
+    max-width: 900px;
+}
+
+.announcement-inner-box {
+    background-color: #e3edf9;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 15px;
+}
+
+.announcement-date {
+    font-size: 14px;
+    color: #121C3E;
+    text-align: center;
 }
 
 .logout button {
