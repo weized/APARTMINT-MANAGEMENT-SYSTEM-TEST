@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Announcements</title>
-    <link rel="stylesheet" href="/src/main/resources/static/announcements.css">
+    <title>Leave Request</title>
+    <link rel="stylesheet" href="/src/main/resources/static/leave-request.css">
 </head>
 <body>
 
@@ -26,7 +26,7 @@
             <img src="/src/main/resources/static/images/dashboard.png" alt="Dashboard Icon">
             Dashboard
         </a>
-        <a href="announcements.html" class="active">
+        <a href="announcements.html">
             <img src="/src/main/resources/static/images/announcements.png" alt="Announcements Icon">
             Announcements
         </a>
@@ -38,7 +38,7 @@
             <img src="/src/main/resources/static/images/reports.png" alt="Reports Icon">
             Reports
         </a>
-        <a href="leave-request.html">
+        <a href="leave-request.html" class="active">
             <img src="/src/main/resources/static/images/leaverequest.png" alt="Leave Request Icon">
             Leave Request
         </a>
@@ -48,21 +48,21 @@
         <button>Log out</button>
     </div>
 
-<!-- BUTTON SIDEBAR -->
-<div class="hamburger" onclick="toggleSidebar()">
-    <img src="/src/main/resources/static/images/sidebar.svg" alt="Sidebar Menu"  style="width: 35px; height: 30px;">
-</div>
+    <!-- BUTTON SIDEBAR -->
+    <div class="hamburger" onclick="toggleSidebar()">
+        <img src="/src/main/resources/static/images/sidebar.svg" alt="Sidebar Menu"  style="width: 35px; height: 30px;">
+    </div>
 
 
 
 
-<!-- JavaScript -->
-<script>
-    function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('active');
-    }
-</script>
+    <!-- JavaScript -->
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+    </script>
 
 
 </body>
