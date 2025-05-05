@@ -10,11 +10,9 @@ public class Announcement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;           // Title of the announcement
+    private String title;           // Optional title for the announcement
     private String content;         // Main message/content
-    private String target;          // Category: all, notice, rules
-    private String roomNumber;      // Optional plain-text room number
-    private String recipient;       // Optional recipient info (e.g. tenant name)
+    private String target;          // 'all', 'notice', or specific room number
 
     private LocalDateTime postedAt; // Timestamp when posted
 
@@ -24,17 +22,6 @@ public class Announcement {
 
     // Default constructor
     public Announcement() {
-        this.postedAt = LocalDateTime.now();
-    }
-
-    // Full constructor
-    public Announcement(String title, String content, String target, String roomNumber, Room room, String recipient) {
-        this.title = title;
-        this.content = content;
-        this.target = target;
-        this.roomNumber = roomNumber;
-        this.room = room;
-        this.recipient = recipient;
         this.postedAt = LocalDateTime.now();
     }
 
@@ -59,20 +46,18 @@ public class Announcement {
     public String getTarget() { return target; }
     public void setTarget(String target) { this.target = target; }
 
-    public String getRoomNumber() { return roomNumber; }
-    public void setRoomNumber(String roomNumber) { this.roomNumber = roomNumber; }
-
-    public String getRecipient() { return recipient; }
-    public void setRecipient(String recipient) { this.recipient = recipient; }
-
     public LocalDateTime getPostedAt() { return postedAt; }
     public void setPostedAt(LocalDateTime postedAt) { this.postedAt = postedAt; }
 
     public Room getRoom() { return room; }
     public void setRoom(Room room) { this.room = room; }
 
-    // Alias for setting content via 'description'
+    // Alias for compatibility with controller using 'description'
     public void setDescription(String description) {
         this.content = description;
+    }
+
+    public String getDescription() {
+        return this.content;
     }
 }

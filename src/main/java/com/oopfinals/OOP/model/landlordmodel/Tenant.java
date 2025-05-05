@@ -1,20 +1,18 @@
 package com.oopfinals.OOP.model.landlordmodel;
 
-import com.oopfinals.OOP.model.landlordmodel.Room;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tenants")
+@Table(name = "tenant")
 public class Tenant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // From tenantmodel
     private String username;
     private String roomNumber;
-    private String firstnameName;
+    private String firstName;  // Changed from firstnameName to firstName
     private String middleName;
     private String lastName;
     private String phoneNumber;
@@ -32,10 +30,10 @@ public class Tenant {
     // Constructors
     public Tenant() {}
 
-    public Tenant(String username, String firstnameName, String middleName, String lastName,
+    public Tenant(String username, String firstName, String middleName, String lastName,
                   String email, String phoneNumber, String roomNumber, boolean filedLeave, Room room) {
         this.username = username;
-        this.firstnameName = firstnameName;
+        this.firstName = firstName;  // Updated to firstName
         this.middleName = middleName;
         this.lastName = lastName;
         this.email = email;
@@ -70,12 +68,12 @@ public class Tenant {
         this.roomNumber = roomNumber;
     }
 
-    public String getFirstnameName() {
-        return firstnameName;
+    public String getFirstName() {
+        return firstName;  // Updated to firstName
     }
 
-    public void setFirstnameName(String firstnameName) {
-        this.firstnameName = firstnameName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;  // Updated to firstName
     }
 
     public String getMiddleName() {
@@ -125,4 +123,11 @@ public class Tenant {
     public void setRoom(Room room) {
         this.room = room;
     }
+
+    // Method to return the full name of the tenant
+    public String getName() {
+        return firstName + " " + (middleName != null ? middleName + " " : "") + lastName;
+    }
+
+    // Removed setRoomId method as it's not needed
 }

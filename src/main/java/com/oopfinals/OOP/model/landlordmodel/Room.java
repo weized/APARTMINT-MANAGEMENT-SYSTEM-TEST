@@ -2,7 +2,6 @@ package com.oopfinals.OOP.model.landlordmodel;
 
 import jakarta.persistence.*;
 import java.util.List;
-
 @Entity
 @Table(name = "rooms")
 public class Room {
