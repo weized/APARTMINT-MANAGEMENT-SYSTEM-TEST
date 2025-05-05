@@ -164,9 +164,11 @@ h1 {
 
 .announcement-tabs-container {
     display: flex;
-    justify-content: center;
-    margin-top: 30px;
+    justify-content: flex-start;
+    margin-top: 10px;
+    padding-left: 20px;
 }
+
 
 .announcement-tabs {
     background: none;
@@ -190,17 +192,27 @@ h1 {
     border: 2px solid #0a1a3c;
 }
 
+.page-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #121C3E;
+    margin-left: 20px;
+    margin-top: -50px;
+}
+
 .breadcrumb {
     background-color: #f1c40f;
-    padding: 12px 230px;
+    padding: 12px 0 12px 43px; /* top/right/bottom/left */
     font-weight: bold;
     color: black;
     font-size: 16px;
     border-radius: 6px;
     margin: 20px auto 10px;
-    width: max-content;
+    width: 90%; /* or use a fixed width if needed */
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    text-align: left;
 }
+
 
 .announcement-box {
     background-color: white;

@@ -54,15 +54,22 @@
     <img src="/src/main/resources/static/images/sidebar.svg" alt="Sidebar Menu" style="width: 35px; height: 30px;">
 </div>
 
+
+<!--Page Ttitle-->
+
+
 <!-- MAIN CONTENT CONTAINER -->
+
 <div class="container">
-    <div class="announcement-tabs-container">
-        <div class="announcement-tabs">
-            <button class="active" onclick="switchTab('All', this)">All</button>
-            <button onclick="switchTab('Room Notice', this)">Room Notice</button>
-            <button onclick="switchTab('Room Rules', this)">Room Rules</button>
+    <h2 class="page-title">Announcements</h2>
+        <div class="announcement-tabs-container">
+            <div class="announcement-tabs">
+
+                <button class="active" onclick="switchTab('All', this)">All</button>
+                <button onclick="switchTab('Room Notice', this)">Room Notice</button>
+                <button onclick="switchTab('Room Rules', this)">Room Rules</button>
+            </div>
         </div>
-    </div>
 
 <!--YELLOW TAB-->
     <div id="breadcrumb" class="breadcrumb">Announcements &gt; All</div>
