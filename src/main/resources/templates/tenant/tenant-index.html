@@ -13,12 +13,12 @@
 
 <div class="content">
 
-  <h1>Welcome to Apartment Management System</h1>
+  <h1>Welcome to Apartment Management System <span th:text="${username}"></span> </h1>
   <div class="center-buttons">
-    <button onclick="location.href='tenant-announcement'">Announcements</button>
-    <button onclick="location.href='tenant-payments'">View Payments</button>
-    <button onclick="location.href='tenant-reports'">Add Complaint</button>
-    <button onclick="location.href='tenant-leave'">Leave Request</button>
+    <button onclick="location.href='/tenant-announcement'">Announcements</button>
+    <button onclick="location.href='/tenant-payments'">View Payments</button>
+    <button onclick="location.href='/tenant-reports'">Add Complaint</button>
+    <button onclick="location.href='/tenant-leave'">Leave Request</button>
   </div>
 </div>
 
