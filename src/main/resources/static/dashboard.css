@@ -2,13 +2,13 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: url('/images/background.png') no-repeat center center fixed;
+    background: url("http://localhost:63342/tenant%20section/src/main/resources/static/images/background.png") no-repeat center center fixed;
     background-size: cover;
     color: white;
     height: 100vh;
+    overflow-x: hidden;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
 }
 
 .header {
@@ -23,7 +23,7 @@ body {
 }
 
 .sidebar.active ~ .container {
-    margin-left: 200px;
+    margin-left: 100px;
 }
 
 .sidebar ~ .container {
@@ -31,7 +31,7 @@ body {
 }
 
 .content {
-    max-width: 600px;
+    max-width: 1000px;
     margin: auto;
 }
 
@@ -50,7 +50,7 @@ h1 {
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.5);
     border-radius: 12px;
     margin: 20px auto;
     padding: 15px;
@@ -101,7 +101,7 @@ h1 {
 .hamburger {
     position: fixed;
     top: 20px;
-    left: 20px;
+    left: 5px;
     font-size: 28px;
     cursor: pointer;
     color: white;
@@ -115,7 +115,7 @@ h1 {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 55px;
 }
 
 .avatar {
@@ -128,6 +128,11 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.avatar img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
 }
 
 .menu-links a {
