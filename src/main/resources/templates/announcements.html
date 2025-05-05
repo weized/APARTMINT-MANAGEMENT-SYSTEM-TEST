@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<!-- CONTENT SIDEBAR-->
+<!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
     <div class="profile">
         <div class="user-info">
@@ -34,7 +34,7 @@
             <img src="/src/main/resources/static/images/payments.png" alt="Payments Icon">
             Payments
         </a>
-        <a href="reports.html">
+        <a href="add-complaints.html">
             <img src="/src/main/resources/static/images/reports.png" alt="Reports Icon">
             Reports
         </a>
@@ -47,14 +47,35 @@
     <div class="logout">
         <button>Log out</button>
     </div>
-
-<!-- BUTTON SIDEBAR -->
-<div class="hamburger" onclick="toggleSidebar()">
-    <img src="/src/main/resources/static/images/sidebar.svg" alt="Sidebar Menu"  style="width: 35px; height: 30px;">
 </div>
 
 
+<div class="hamburger" onclick="toggleSidebar()">
+    <img src="/src/main/resources/static/images/sidebar.svg" alt="Sidebar Menu" style="width: 35px; height: 30px;">
+</div>
 
+<!-- MAIN CONTENT CONTAINER -->
+<div class="container">
+    <div class="announcement-tabs-container">
+        <div class="announcement-tabs">
+            <button class="active" onclick="switchTab('All', this)">All</button>
+            <button onclick="switchTab('Room Notice', this)">Room Notice</button>
+            <button onclick="switchTab('Room Rules', this)">Room Rules</button>
+        </div>
+    </div>
+
+
+
+    <div id="breadcrumb" class="breadcrumb">Announcements &gt; All</div>
+
+    <div class="announcement-wrapper">
+        <div class="announcement-box-blue"></div>
+        <div class="announcement-box-white"></div>
+    </div>
+
+
+    <div class="content" id="contentArea"></div>
+</div>
 
 <!-- JavaScript -->
 <script>
@@ -62,8 +83,13 @@
         const sidebar = document.getElementById('sidebar');
         sidebar.classList.toggle('active');
     }
-</script>
 
+    function switchTab(tabName, button) {
+        document.querySelectorAll('.announcement-tabs button').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        document.getElementById('breadcrumb').innerHTML = `Announcements &gt; ${tabName}`;
+    }
+</script>
 
 </body>
 </html>
