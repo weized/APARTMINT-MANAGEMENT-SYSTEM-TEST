@@ -1,5 +1,7 @@
 package com.oopfinals.OOP.security;
 
+
+import java.io.IOException;
 import com.oopfinals.OOP.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
-import com.oopfinals.OOP.service.CustomUserDetailsService;
+
 
 import javax.sql.DataSource;
 
@@ -32,23 +34,53 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/","/index","/signup","/process_register","/login","/process_login","/images/**","/css/**","/js/**","/webjars/**").permitAll() // Allow access to these endpoints
-                        .anyRequest().authenticated() // All other requests require authentication
+                        .requestMatchers(
+                                "/", "/index", "/signup", "/process_register", "/login", "/process_login",
+                                "/images/**", "/css/**", "/js/**", "/webjars/**",
+                                "/tenant-announcements", "/tenant-index", "/tenant-leave", "/tenant-payments", "/tenant-reports",
+                                "/tenant-sidebar", "/tenant-sidebar-button", "/landlord-announcements", "/landlord-dashboard",
+                                "/landlord-apartment-info", "/landlord-manage-payments", "/landlord-revenue", "/landlord-sidebar",
+                                "/landlord-sidebar-button", "/landlord-view-complaints, ", "/tenant/reports", "/tenant/submit-report, ", "/reports", "/submit-reports"
+                        ).permitAll()
+                        .requestMatchers("/landlord/**").hasRole("LANDLORD")
+                        .requestMatchers("/tenant/**").hasRole("TENANT")
+                        .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login") // Custom login page
-                        .permitAll() // Allow everyone to see the login page
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .successHandler((request, response, authentication) -> {
+                            // Check user role
+                            authentication.getAuthorities().forEach(authority -> {
+                                try {
+                                    if (authority.getAuthority().equals("ROLE_LANDLORD")) {
+                                        response.sendRedirect("/landlord-dashboard");
+                                    } else if (authority.getAuthority().equals("ROLE_TENANT")) {
+                                        response.sendRedirect("/tenant-index");
+                                    } else {
+                                        response.sendRedirect("/default"); // fallback
+                                    }
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                        })
+                        .permitAll()
                 )
-                .logout(LogoutConfigurer::permitAll // Allow everyone to log out
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll()
                 );
 
         return http.build();
-
     }
 
+
 }
+
+
+

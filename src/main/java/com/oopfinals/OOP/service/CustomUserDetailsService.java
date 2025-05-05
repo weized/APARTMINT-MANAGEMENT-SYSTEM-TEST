@@ -12,15 +12,31 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    @Autowired
-    private UserRepository repo;
+
+    private final UserRepository userRepository;
+
+    public CustomUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-        User user = repo.findByUsername(username);
-        if(user == null){
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
+
+        if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        return new CustomUserDetails(user);
+
+        String role = user.getAccount_role();
+        if (role.startsWith("ROLE_")) {
+            role = role.substring(5); // Remove "ROLE_" prefix if it exists
+        }
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getUsername())
+                .password(user.getPassword())
+                .roles(role.toUpperCase()) // Now it's safe to use .roles()
+                .build();
     }
 }
+

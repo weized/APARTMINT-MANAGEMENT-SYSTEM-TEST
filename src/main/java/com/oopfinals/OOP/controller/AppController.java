@@ -1,6 +1,6 @@
 package com.oopfinals.OOP.controller;
 
-
+import jakarta.servlet.http.HttpSession;
 import com.oopfinals.OOP.model.User;
 import com.oopfinals.OOP.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,6 @@ public class AppController {
             model.addAttribute("emailError", "Email is already registered.");
             return "signup";
         }
-
         user.setAccount_role("tenant");
         // Encode the password and save
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -56,25 +55,6 @@ public class AppController {
         return "login";
     }
 
-    @PostMapping("/process_login")
-    public String processLogin(@ModelAttribute User user, Model model) {
-        // Find the user by username
-        User existingUser = repo.findByUsername(user.getUsername());
-
-        // Check if the user exists and if the password matches
-        if (existingUser != null && passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
-            // Successful login
-            if("tenant".equalsIgnoreCase(existingUser.getAccount_role())){
-                return "tenantmenupage"; // Redirect to home page or dashboard
-            } else {
-                return "landlordmenupage";
-            }
-        } else {
-            // Failed login
-            model.addAttribute("error", "Invalid email or password.");
-            return "login"; // Return to login form with error
-        }
-    }
 
 
 }

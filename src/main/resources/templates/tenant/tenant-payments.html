@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Tenant Payments</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #e6f2ff;
+    }
+    button {
+      border: none;
+      padding: 8px 16px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .paid {
+      background-color: green;
+      color: white;
+    }
+    .unpaid {
+      background-color: red;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<div th:replace="~{tenant/tenant-sidebar-button :: sidebarBtn}"></div>
+<div th:replace="~{tenant/tenant-sidebar :: sidebarMenu}"></div>
+
+<h1>Tenant Payments</h1>
+<!-- Updated line to handle null payments -->
+<p th:text="'Number of payments: ' + ${payments != null ? #lists.size(payments) : 0}"></p>
+
+<table>
+  <thead>
+  <tr>
+    <th>Date</th>
+    <th>Amount Paid</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="p : ${payments}">
+    <td th:text="${p.paymentDate}"></td>
+    <td th:text="${p.amountPaid}"></td>
+    <td>
+      <form th:action="@{/tenant-payments/mark-paid/{id}(id=${p.id})}" method="post">
+        <button th:text="${p.status}" th:class="${p.status.equals('Paid')} ? 'paid' : 'unpaid'"></button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div th:if="${#lists.isEmpty(payments)}">
+  <p>No payments found.</p>
+</div>
+
+</body>
+</html>

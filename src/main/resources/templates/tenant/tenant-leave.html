@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Leave Request</title>
+  <link rel="stylesheet" th:href="@{/sidebar.css}">
+</head>
+<body>
+
+<div th:replace="~{tenant/tenant-sidebar-button :: sidebarBtn}"></div>
+<div th:replace="~{tenant/tenant-sidebar :: sidebarMenu}"></div>
+<a th:href="@{/tenant/index}">Go Back</a>
+
+<div class="content">
+  <form action="/tenant/leave/submit" method="post" th:object="${leaveRequest}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+    <label for="targetLeaveDate">Target Leave Date:</label>
+    <input type="date" id="targetLeaveDate" name="targetLeaveDate" required><br>
+
+    <label for="reason">Reason:</label>
+    <textarea id="reason" name="reason" required></textarea><br>
+
+    <button type="submit">Submit Leave Request</button>
+  </form>
+
+
+</div>
+
+<script th:src="@{/sidebar.js}"></script>
+
+</body>
+</html>
