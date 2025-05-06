@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<!-- SIDEBAR -->
+<!-- SIDEBAR CONTENT-->
 <div class="sidebar" id="sidebar">
     <div class="profile">
         <div class="user-info">
@@ -21,6 +21,7 @@
         </div>
     </div>
 
+<!-- SIDEBAR MENU LINKS-->
     <div class="menu-links">
         <a href="dashboard.html">
             <img src="/src/main/resources/static/images/dashboard.png" alt="Dashboard Icon">
@@ -49,17 +50,13 @@
     </div>
 </div>
 
-
+<!--SIDEBAR-->
 <div class="hamburger" onclick="toggleSidebar()">
     <img src="/src/main/resources/static/images/sidebar.svg" alt="Sidebar Menu" style="width: 35px; height: 30px;">
 </div>
 
 
-<!--Page Ttitle-->
-
-
 <!-- MAIN CONTENT CONTAINER -->
-
 <div class="container">
     <h2 class="page-title">Announcements</h2>
         <div class="announcement-tabs-container">
@@ -140,7 +137,7 @@
         }
     }
 
-    // DEFAULT SHOW ALL BUTTON
+// DEFAULT SHOW ALL BUTTON
     window.onload = () => {
         const defaultButton = document.querySelector('.announcement-tabs button.active');
         if (defaultButton) {

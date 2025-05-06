@@ -202,13 +202,13 @@ h1 {
 
 .breadcrumb {
     background-color: #f1c40f;
-    padding: 12px 0 12px 43px; /* top/right/bottom/left */
+    padding: 12px 0 12px 43px;
     font-weight: bold;
     color: black;
     font-size: 16px;
     border-radius: 6px;
     margin: 20px auto 10px;
-    width: 90%; /* or use a fixed width if needed */
+    width: 90%;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     text-align: left;
 }
