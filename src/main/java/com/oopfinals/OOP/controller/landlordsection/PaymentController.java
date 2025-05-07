@@ -1,14 +1,17 @@
 package com.oopfinals.OOP.controller.landlordsection;
 
+import com.oopfinals.OOP.dto.RoomPaymentDTO;
 import com.oopfinals.OOP.model.landlordmodel.Payment;
 import com.oopfinals.OOP.model.landlordmodel.Room;
 import com.oopfinals.OOP.service.landlordsection.PaymentService;
 import com.oopfinals.OOP.service.landlordsection.RoomService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -23,32 +26,36 @@ public class PaymentController {
         this.roomService = roomService;
     }
 
-    // Display all payments and room payment information
     @GetMapping("/payments")
     public String viewPayments(Model model) {
-        // Fetch room payment information (assuming RoomService provides it)
-        List<Room> rooms = roomService.getAllRooms(); // Get all rooms
-        model.addAttribute("rooms", rooms);  // Add rooms to the model for the view
-
-        // Optionally, fetch all payments or any additional data
+        List<Room> rooms = roomService.getAllRooms();
         List<Payment> payments = paymentService.getAllPayments();
-        model.addAttribute("payments", payments);  // Add all payments to the model
 
-        return "landlord/payments";  // Return the payments view template
-    }
+        List<RoomPaymentDTO> roomPayments = new ArrayList<>();
 
-    // Add a new payment for a specific room and tenant
-    @PostMapping("/payments/add")
-    public String addPayment(@RequestParam String tenantName,
-                             @RequestParam Double amount,
-                             @RequestParam Long roomId) {
-        // Find the room by its ID
-        Room room = roomService.getRoomById(roomId);
+        for (Room room : rooms) {
+            Payment latestPayment = payments.stream()
+                    .filter(p -> p.getRoom().getId().equals(room.getId()))
+                    .findFirst()
+                    .orElse(null);
 
-        // Create a new Payment object
-        Payment payment = new Payment(tenantName, amount, LocalDate.now(), room);  // Payment constructor expects room
-        paymentService.savePayment(payment);  // Save the payment
+            String status = latestPayment != null ? latestPayment.getPaymentStatus() : "UNPAID";
+            double monthlyRent = room.getMonthlyRent();
+            double bill = monthlyRent;
+            int tenantCount = room.getTenants().size();
 
-        return "redirect:/landlord/payments";  // Redirect back to payments view
+            RoomPaymentDTO dto = new RoomPaymentDTO(
+                    room.getName(),
+                    tenantCount,
+                    monthlyRent,
+                    bill,
+                    status
+            );
+
+            roomPayments.add(dto);
+        }
+
+        model.addAttribute("roomPayments", roomPayments);
+        return "landlord/payments";
     }
 }

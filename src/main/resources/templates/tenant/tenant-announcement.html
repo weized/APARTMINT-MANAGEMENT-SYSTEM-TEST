@@ -17,10 +17,10 @@
 
 <div id="all">
   <h3>All Announcements</h3>
-  <div th:each="a : ${allAnnouncements}" style="border: 1px solid #ccc; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #f9f9f9;">
-    <div><strong th:text="${a.title}"></strong></div>
-    <div th:text="${a.message }" style="margin: 10px 0;"></div>
-    <div style="font-size: 0.9em; color: gray;" th:text="${#temporals.format(a.postedAt, 'MMMM dd, yyyy')}"></div>
+  <div th:each="announcement : ${announcements}" style="border: 1px solid #ccc; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #f9f9f9;">
+
+    <div th:text="${announcement.content }" style="margin: 10px 0;"></div>
+    <div style="font-size: 0.9em; color: gray;" th:text="${#temporals.format(announcement.postedAt, 'MMMM dd, yyyy')}"></div>
   </div>
 </div>
 

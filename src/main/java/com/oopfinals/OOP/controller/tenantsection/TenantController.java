@@ -1,7 +1,9 @@
 package com.oopfinals.OOP.controller.tenantsection;
 
+import com.oopfinals.OOP.model.landlordmodel.Announcement;
 import com.oopfinals.OOP.model.landlordmodel.Complaint;
 import com.oopfinals.OOP.model.landlordmodel.Room; // Assuming Room is in landlordmodel
+import com.oopfinals.OOP.service.landlordsection.AnnouncementService;
 import com.oopfinals.OOP.service.landlordsection.ComplaintService; // Assuming you have ComplaintService
 import com.oopfinals.OOP.service.landlordsection.RoomService; // Assuming you have RoomService
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,8 @@ public class TenantController {
 
     @Autowired
     private RoomService roomService; // Service to fetch room details for complaints
-
+    @Autowired
+    private AnnouncementService announcementService;
     // Home page for tenant
     @GetMapping("/tenant-index")
     public String tenantIndex() {
@@ -32,6 +35,10 @@ public class TenantController {
     @GetMapping("/tenant-announcement")
     public String showAnnouncement(Model model) {
         // Get all announcements (implement AnnouncementService as needed)
+        List<Announcement> announcements = announcementService.getAllAnnouncements();
+        List<Room> rooms = roomService.getAllRooms();
+        model.addAttribute("announcements", announcements);
+        model.addAttribute("rooms", rooms);
         return "tenant/tenant-announcement";
     }
 

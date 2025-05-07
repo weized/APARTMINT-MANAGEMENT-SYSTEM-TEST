@@ -183,16 +183,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="room : ${roomPayments}">
-                <td th:text="${room.name}">Room Name</td>
-                <td th:text="${room.numberOfTenants}">0</td>
-                <td th:text="${room.monthlyRent}">0.00</td>
-                <td th:text="${room.monthlyBill}">0.00</td>
+            <tr th:each="payment : ${roomPayments}">
+                <td th:text="${payment.roomName}">Room Name</td>
+                <td th:text="${payment.numberOfTenants}">0</td>
+                <td th:text="${payment.monthlyRent}">0.00</td>
+                <td th:text="${payment.monthlyBill}">0.00</td>
                 <td>
-                    <span th:if="${room.paymentStatus == 'PAID'}" class="status-paid">Paid</span>
-                    <span th:if="${room.paymentStatus == 'UNPAID'}" class="status-unpaid">
+                    <span th:if="${payment.paymentStatus == 'PAID'}" class="status-paid">Paid</span>
+                    <span th:if="${payment.paymentStatus == 'UNPAID'}" class="status-unpaid">
                         Unpaid
-                        <button class="reminder-button" th:data-room-name="${room.name}" onclick="sendReminder(this)">
+                        <button class="reminder-button" th:data-room-name="${payment.roomName}" onclick="sendReminder(this)">
                             Send Reminder
                         </button>
                     </span>
