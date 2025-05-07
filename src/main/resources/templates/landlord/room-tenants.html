@@ -3,7 +3,6 @@
 <head>
     <title>Tenants of Room</title>
     <style>
-        /* General body setup */
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
@@ -11,7 +10,6 @@
             display: flex;
         }
 
-        /* Sidebar */
         .sidebar {
             width: 250px;
             background-color: #0c1c3d;
@@ -41,29 +39,29 @@
             flex-direction: column;
         }
 
-        .sidebar .feature-link {
+        .feature-link {
             background-color: transparent;
             text-decoration: none;
             padding: 15px 20px;
-            text-align: left;
             width: 82%;
             font-size: 16px;
             border: none;
-            cursor: pointer;
-            display: block;
             color: white;
-            transition: all 0.3s ease;
-            position: relative;
+            display: block;
+            transition: background-color 0.3s ease;
         }
 
-        /* Main Content */
+        .feature-link:hover {
+            background-color: #ffca28;
+            color: black;
+        }
+
         .main-content {
             margin-left: 250px;
             width: calc(100% - 250px);
             padding: 20px;
         }
 
-        /* Breadcrumb */
         .breadcrumb {
             background-color: #ffc107;
             padding: 10px 20px;
@@ -72,7 +70,6 @@
             margin-bottom: 20px;
         }
 
-        /* Card layout */
         .card {
             background-color: white;
             padding: 30px;
@@ -81,7 +78,6 @@
             margin-top: 20px;
         }
 
-        /* Table */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -89,7 +85,6 @@
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
         }
 
         table th, table td {
@@ -108,6 +103,62 @@
             background-color: #f1f1f1;
         }
 
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button.submit-btn {
+            background-color: #ffca28;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.submit-btn:hover {
+            background-color: #e6b800;
+        }
+
+        .logout {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px;
+            width: calc(100% - 40px);
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout:hover {
+            background-color: darkred;
+        }
+
+        .message {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .error {
+            background-color: #dc3545;
+            color: white;
+        }
     </style>
 </head>
 
@@ -134,6 +185,27 @@
 <!-- Main Content -->
 <div class="main-content">
     <div class="breadcrumb">Dashboard / Tenants of Room <span th:text="${room.roomNumber}"></span></div>
+
+    <!-- Display Success/Error Message -->
+    <div th:if="${successMessage}" class="message success" th:text="${successMessage}"></div>
+    <div th:if="${error}" class="message error" th:text="${error}"></div>
+
+    <!-- Add Tenant Form -->
+    <div class="card">
+        <h2>Add New Tenant to Room <span th:text="${room.roomNumber}"></span></h2>
+        <form th:action="@{/landlord/rooms/{roomId}/tenants(roomId=${room.id})}" method="post">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required placeholder="Enter tenant's full name">
+
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" required placeholder="Enter phone number">
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required placeholder="Enter email address">
+
+            <button type="submit" class="submit-btn">Add Tenant</button>
+        </form>
+    </div>
 
     <!-- Tenants Table -->
     <div class="card">

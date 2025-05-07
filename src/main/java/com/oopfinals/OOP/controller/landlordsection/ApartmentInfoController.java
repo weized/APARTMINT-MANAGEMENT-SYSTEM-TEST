@@ -25,6 +25,7 @@ public class ApartmentInfoController {
     @Autowired
     private TenantService tenantService;
 
+    // Show apartment info (list of rooms)
     @GetMapping("/apartment-info")
     public String showApartmentInfo(Model model) {
         List<Room> rooms = roomService.getAllRooms();
@@ -32,11 +33,10 @@ public class ApartmentInfoController {
         return "landlord/apartment";
     }
 
+    // Add regulation to all rooms or a specific room
     @PostMapping("/add-regulation")
     public String addRegulation(@RequestParam("roomId") String roomId,
                                 @RequestParam("description") String description, Model model) {
-
-        // Validate description
         if (description == null || description.trim().isEmpty()) {
             model.addAttribute("error", "Regulation description cannot be empty.");
             return "redirect:/landlord/apartment-info";
@@ -51,37 +51,26 @@ public class ApartmentInfoController {
             }
         } catch (NumberFormatException e) {
             model.addAttribute("error", "Invalid room ID.");
-            return "redirect:/landlord/apartment-info";
         } catch (Exception e) {
             model.addAttribute("error", "An error occurred while adding the regulation.");
-            return "redirect:/landlord/apartment-info";
         }
 
         return "redirect:/landlord/apartment-info";
     }
 
-    @GetMapping("/landlord/room/{id}/tenants")
-    public String getRoomTenants(@PathVariable("id") Long roomId, Model model) {
-        // Fetch room and its tenants from the service layer
-        Room room = roomService.getRoomById(roomId);
-        model.addAttribute("room", room);
-        model.addAttribute("tenants", room.getTenants());
-        return "landlord/room-tenants"; // Return the name of the view to display tenants
-    }
-    @GetMapping("/landlord/room-tenants/{roomId}/tenants")
-    public String viewTenantsByRoom(@PathVariable Long roomId, Model model) {
-
-        TenantService tenantService = null;
-        List<Tenant> tenants = tenantService.getTenantsByRoomId(roomId); // Implement this method
-        model.addAttribute("tenants", tenants);
-        return "landlord/tenants-list"; // Ensure this template exists in templates folder
-    }
-
     @GetMapping("/room-tenants/{roomId}/tenants")
-    public String getTenantsByRoom(@PathVariable("roomId") Long roomId, Model model) {
+    public String viewTenantsByRoom(@PathVariable Long roomId, Model model) {
+        Room room = roomService.getRoomById(roomId);
         List<Tenant> tenants = tenantService.getTenantsByRoomId(roomId);
         model.addAttribute("tenants", tenants);
-        return "landlord/tenants-list"; // This refers to src/main/resources/templates/tenants-list.html
+        model.addAttribute("room", room);
+        model.addAttribute("tenant", new Tenant()); // Required for form binding
+        return "landlord/tenants-list";
+    }
+
+    @PostMapping("/tenants/add")
+    public String addTenant(@ModelAttribute Tenant tenant, @RequestParam("roomId") Long roomId) {
+        tenantService.addTenantToRoom(tenant, roomId);
+        return "redirect:/landlord/room-tenants/" + roomId + "/tenants";
     }
 }
-

@@ -6,8 +6,5 @@ import java.util.List;
 
 public interface TenantRepository extends JpaRepository<Tenant, Long> {
     List<Tenant> findByRoomId(Long roomId);
-
     List<Tenant> findByFiledLeaveTrue();
 }
-
-

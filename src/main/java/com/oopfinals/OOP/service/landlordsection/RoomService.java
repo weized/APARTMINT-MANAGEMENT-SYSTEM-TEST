@@ -63,4 +63,11 @@ public class RoomService {
                 .filter(room -> room.getTenants().isEmpty()) // or use room.isAvailable() if such a field exists
                 .collect(Collectors.toList());
     }
+    public Room getRoomDetails() {
+        // Simulated room data; replace this with actual database logic
+        Room room = new Room();
+        room.setId(1L);
+        room.setRoomNumber("A101");
+        return room;
+    }
 }

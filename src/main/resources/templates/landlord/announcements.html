@@ -107,10 +107,6 @@
             <select id="target" name="target" required>
                 <option value="" disabled selected>Select Target Audience</option>
                 <option value="all">Everyone</option>
-                <option value="notice">Room Notice</option>
-                <option value="rules">Room Rules</option>
-                <option disabled>────────────</option>
-                <option th:each="room : ${rooms}" th:value="${room.name}" th:text="${'Room ' + room.name}"></option>
             </select>
 
             <button type="submit" class="submit-btn">Post Announcement</button>
@@ -124,14 +120,18 @@
             <thead>
             <tr>
                 <th>Description</th>
-                <th>Target</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="announcement : ${announcements}">
-                <!--/*@thymesVar id="description" type=""*/-->
-                <td th:text="${announcement.description}"></td>
-                <td th:text="${announcement.target == 'all' ? 'Everyone' : (announcement.target == 'notice' ? 'Room Notice' : 'Room Rules')}"></td>
+                <td th:text="${announcement.content}"></td>
+                <td>
+                    <form th:action="@{'/landlord/announcements/' + ${announcement.id}}" method="post">
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" style="background-color:red;color:white;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;">Delete</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
