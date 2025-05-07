@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "payments")
+@Table(name = "rooms_payments")  // Changed table name
 public class Payment {
 
     @Id
@@ -27,9 +27,10 @@ public class Payment {
     @Column(nullable = false)
     private String paymentStatus;
 
-    // Constructors
+    // Default constructor
     public Payment() {}
 
+    // Full constructor
     public Payment(String tenantName, Double amount, LocalDate paymentDate, Room room, String paymentStatus) {
         this.tenantName = tenantName;
         this.amount = amount;
@@ -38,10 +39,7 @@ public class Payment {
         this.paymentStatus = paymentStatus;
     }
 
-    public Payment(String tenantName, Double amount, LocalDate now, Room room) {
-    }
-
-    // Getters and Setters
+    // Getters and setters
     public Long getId() {
         return id;
     }
