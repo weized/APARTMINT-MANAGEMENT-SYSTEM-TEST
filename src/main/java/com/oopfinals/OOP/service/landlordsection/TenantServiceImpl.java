@@ -53,4 +53,9 @@ public class TenantServiceImpl implements TenantService {
     public void addTenantToRoom(Tenant tenant, Long roomId) {
 
     }
+
+    @Override
+    public Tenant findByUsername(String username) {
+        return null;
+    }
 }

@@ -39,7 +39,7 @@ public class PaymentController {
                     .findFirst()
                     .orElse(null);
 
-            String status = latestPayment != null ? latestPayment.getPaymentStatus() : "UNPAID";
+            String status = latestPayment != null ? String.valueOf(latestPayment.getPaymentStatus()) : "UNPAID";
             double monthlyRent = room.getMonthlyRent();
             double bill = monthlyRent;
             int tenantCount = room.getTenants().size();

@@ -12,4 +12,6 @@ public interface TenantService {
     void addTenant(Tenant tenant, Long roomId);
 
     void addTenantToRoom(Tenant tenant, Long roomId);
+
+    Tenant findByUsername(String username);
 }

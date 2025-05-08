@@ -2,23 +2,139 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard</title>
-  <link rel="stylesheet" th:href="@{/sidebar.css}">
-</head>
+  <title>Tenant Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #e3f2fd;
+      color: #000;
+    }
 
+    .sidebar {
+      width: 260px;
+      background-color: #0d1b2a;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      color: white;
+      padding: 30px 20px;
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .sidebar small {
+      font-size: 14px;
+      color: #b0bec5;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 30px;
+    }
+
+    .sidebar ul li {
+      margin: 15px 0;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      display: block;
+      padding: 10px;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    .sidebar ul li a:hover,
+    .sidebar ul li a.active {
+      background-color: #1b263b;
+    }
+
+    .main-content {
+      margin-left: 280px;
+      padding: 40px;
+    }
+
+    .main-content h1 {
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+
+    .menu-boxes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .box {
+      background-color: white;
+      border-radius: 16px;
+      padding: 30px 20px;
+      width: 260px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+
+    .box:hover {
+      transform: translateY(-5px);
+    }
+
+    .box h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .box a {
+      text-decoration: none;
+      color: #0d47a1;
+      font-weight: 600;
+      font-size: 14px;
+    }
+  </style>
+</head>
 <body>
 
-<div th:replace="~{tenant/tenant-sidebar-button :: sidebarBtn}"></div>
-<div th:replace="~{tenant/tenant-sidebar :: sidebarMenu}"></div>
+<!-- Sidebar (This will be reused for tenant dashboard) -->
+<div class="sidebar">
+  <h2>Tenant Dashboard<br><small>Apartment Resident</small></h2>
+  <ul>
+    <li><a href="/tenant-announcement">Announcements</a></li>
+    <li><a href="/tenant-payments">View Payments</a></li>
+    <li><a href="/tenant-complaint">Add Complaint</a></li>
+    <li><a href="/tenant-leave-request">Leave Request</a></li>
+  </ul>
+</div>
 
-<div class="content">
+<!-- Main Content -->
+<div class="main-content">
+  <h1>Welcome to Your Tenant Dashboard!</h1>
 
-  <h1>Welcome to Apartment Management System</h1>
-  <div class="center-buttons">
-    <button onclick="location.href='tenant-announcement'">Announcements</button>
-    <button onclick="location.href='tenant-payments'">View Payments</button>
-    <button onclick="location.href='tenant-reports'">Add Complaint</button>
-    <button onclick="location.href='tenant-leave'">Leave Request</button>
+  <!-- Menu Boxes for Tenant Options -->
+  <div class="menu-boxes">
+    <div class="box">
+      <h3>Announcements</h3>
+      <a href="/tenant-announcement">View latest announcements posted by landlord</a>
+    </div>
+    <div class="box">
+      <h3>View Payments</h3>
+      <a href="/tenant-payments">Check your payment history and balance</a>
+    </div>
+    <div class="box">
+      <h3>Add Complaint</h3>
+      <a href="/tenant-complaint">File a complaint or maintenance request</a>
+    </div>
+    <div class="box">
+      <h3>Leave Request</h3>
+      <a href="/tenant-leave-request">Submit a leave request to your landlord</a>
+    </div>
   </div>
 </div>
 

@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.math.BigDecimal;
+
 @Controller
 public class RevenueController {
 
@@ -15,7 +17,7 @@ public class RevenueController {
 
     @GetMapping("/landlord/revenue")
     public String viewRevenue(@RequestParam(value = "type", defaultValue = "monthly") String type, Model model) {
-        double revenue;
+        BigDecimal revenue;
         if (type.equals("yearly")) {
             revenue = paymentService.calculateAnnualRevenue();
         } else {

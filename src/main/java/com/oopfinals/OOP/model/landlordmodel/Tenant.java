@@ -9,7 +9,7 @@ public class Tenant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String fullname;
     private String username;
     private String roomNumber;
     private String firstName;  // Changed from firstnameName to firstName

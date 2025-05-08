@@ -25,7 +25,7 @@ public class AppController {
     }
 
     @GetMapping("/signup")
-    public String showSignpp(Model model){
+    public String showSignup(Model model){
         model.addAttribute("user", new User());
         return "signup";
     }

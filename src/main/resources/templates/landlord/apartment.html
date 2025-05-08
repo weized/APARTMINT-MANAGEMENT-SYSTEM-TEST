@@ -3,7 +3,6 @@
 <head>
     <title>Apartment Information</title>
     <style>
-        /* General body setup */
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
@@ -11,7 +10,6 @@
             display: flex;
         }
 
-        /* Sidebar */
         .sidebar {
             width: 250px;
             background-color: #0c1c3d;
@@ -79,14 +77,12 @@
             background-color: darkred;
         }
 
-        /* Main Content */
         .main-content {
             margin-left: 250px;
             width: calc(100% - 250px);
             padding: 20px;
         }
 
-        /* Breadcrumb */
         .breadcrumb {
             background-color: #ffc107;
             padding: 10px 20px;
@@ -95,7 +91,6 @@
             margin-bottom: 20px;
         }
 
-        /* Card layout */
         .card {
             background-color: white;
             padding: 30px;
@@ -104,14 +99,12 @@
             margin-top: 20px;
         }
 
-        /* Table */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
             background-color: white;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
 
@@ -141,7 +134,6 @@
             color: #555;
         }
 
-        /* View Tenants Button */
         .btn {
             background-color: #ffc402;
             padding: 10px 20px;
@@ -152,10 +144,24 @@
             text-align: center;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            border: none;
         }
 
         .btn:hover {
             background-color: #e6b800;
+        }
+
+        .btn-red {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn-red:hover {
+            background-color: #d32f2f;
+        }
+
+        .toggle-buttons {
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -184,58 +190,107 @@
 <div class="main-content">
     <div class="breadcrumb">Dashboard / Apartment Information</div>
 
-    <!-- Apartment Information Table -->
-    <div class="card">
-        <h2>Apartment Information</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Room</th>
-                <th>Price</th>
-                <th>Max Tenants</th>
-                <th>Regulations</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="room : ${rooms}">
-                <td th:text="${room.roomNumber}"></td> <!-- Display Room Number -->
-                <td th:text="${room.rent}"></td> <!-- Display Rent -->
-                <td th:text="${room.maxTenants}"></td> <!-- Display Max Tenants -->
-                <td>
-                    <ul>
-                        <!-- Displaying Regulations for Each Room -->
-                        <li th:each="reg : ${room.regulations}" th:text="${reg.description}"></li>
-                    </ul>
-                </td>
-                <td>
-                    <!-- View Tenants Button -->
-                    <a th:href="@{/landlord/room-tenants/{id}/tenants(id=${room.id})}" class="btn">View Tenants</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <!-- Toggle Buttons -->
+    <div class="toggle-buttons">
+        <button class="btn" onclick="showSection('apartmentInfoSection')">Apartment Info</button>
+        <button class="btn" onclick="showSection('leaveRequestsSection')">View Leave Requests</button>
     </div>
 
-    <!-- Add New Regulation Form -->
-    <div class="card">
-        <h2>Add New Regulation</h2>
-        <form th:action="@{/landlord/add-regulation}" method="post">
-            <label for="roomId">Select Room:</label>
-            <select id="roomId" name="roomId" required>
-                <option value="" disabled selected>Select a Room or All</option>
-                <option value="all">All Rooms</option>
-                <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.roomNumber}"></option>
-            </select>
+    <!-- Apartment Info Section -->
+    <div id="apartmentInfoSection">
+        <div class="card">
+            <h2>Apartment Information</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Room</th>
+                    <th>Price</th>
+                    <th>Max Tenants</th>
+                    <th>Regulations</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="room : ${rooms}">
+                    <td th:text="${room.roomNumber}"></td>
+                    <td th:text="${room.rent}"></td>
+                    <td th:text="${room.maxTenants}"></td>
+                    <td>
+                        <ul>
+                            <li th:each="reg : ${room.regulations}" th:text="${reg.description}"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <a th:href="@{/landlord/room-tenants/{id}/tenants(id=${room.id})}" class="btn">View Tenants</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-            <label for="description">Regulation Description:</label>
-            <input type="text" id="description" name="description" required placeholder="Enter regulation...">
-
-            <button type="submit">Add Regulation</button>
-        </form>
+        <!-- Add Regulation Section -->
+        <div class="card">
+            <h2>Add Regulation</h2>
+            <form th:action="@{/landlord/add-regulation}" method="post">
+                <label for="description">Description:</label><br>
+                <input type="text" name="description" required><br><br>
+                <label for="roomId">Room (Leave empty for all rooms):</label><br>
+                <input type="text" name="roomId" placeholder="e.g., 101"><br><br>
+                <button class="btn" type="submit">Add Regulation</button>
+            </form>
+        </div>
     </div>
 
-</div>
+                <!-- Leave Requests Section -->
+                <div id="leaveRequestsSection" >
+                    <div class="card">
+                        <h2>Leave Requests</h2>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Tenant Name</th>
+                                <th>Room</th>
+                                <th>Reason</th>
+                                <th>Target Leave Date</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Corrected attribute name and property access -->
+                            <tr th:each="request : ${leave_requests}">
+                                <td th:text="${request.tenantName}">Tenant Name</td>
+                                <td th:text="${request.room.roomNumber}">Room</td>
+                                <td th:text="${request.reason}">Reason</td>
+                                <td th:text="${#temporals.format(request.targetLeaveDate, 'yyyy-MM-dd')}">Date</td>
+                                <td>
+                                    <form th:action="@{/landlord/leave-request/approve}" method="post" style="display:inline;">
+                                        <input type="hidden" name="requestId" th:value="${request.id}" />
+                                        <button type="submit" class="btn">Approve</button>
+                                    </form>
+                                    <form th:action="@{/landlord/leave-request/disapprove}" method="post" style="display:inline;">
+                                        <input type="hidden" name="requestId" th:value="${request.id}" />
+                                        <button type="submit" class="btn btn-red">Disapprove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+                <!-- Section Toggle Script -->
+<script>
+    function showSection(sectionId) {
+        document.getElementById("apartmentInfoSection").style.display = "none";
+        document.getElementById("leaveRequestsSection").style.display = "none";
+        document.getElementById(sectionId).style.display = "block";
+    }
+
+    // Set default visible section
+    showSection('apartmentInfoSection');
+</script>
 
 </body>
 </html>

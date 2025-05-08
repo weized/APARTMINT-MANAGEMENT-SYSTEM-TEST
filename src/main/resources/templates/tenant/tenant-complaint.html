@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Tenant Leave Request</title>
+  <meta charset="UTF-8">
+  <title>Tenant Report</title>
   <style>
     /* Body and Sidebar Styles */
     body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #cce9f9; display: flex; }
@@ -38,31 +39,36 @@
     .breadcrumb { background-color: #ffc107; padding: 10px 20px; font-weight: bold; }
     .card { background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); margin-top: 20px; }
 
-    /* Form and Button Styles */
-    form { margin-bottom: 20px; }
-    input[type="text"], input[type="date"], select, textarea {
-      width: 100%;
+    /* Form Styles */
+    form { display: flex; flex-direction: column; }
+    label { margin-bottom: 5px; font-weight: bold; color: #0c1c3d; }
+    input[type="text"], textarea {
       padding: 10px;
-      margin: 8px 0 15px 0;
-      border-radius: 5px;
+      margin-bottom: 20px;
       border: 1px solid #ccc;
-      box-sizing: border-box;
+      border-radius: 5px;
+      font-size: 16px;
+      width: 100%;
     }
-    textarea { resize: vertical; min-height: 100px; }
+    textarea { resize: vertical; height: 120px; }
 
-    button.submit-btn {
+    /* Submit Button */
+    button[type="submit"] {
+      padding: 10px 20px;
       background-color: #ffca28;
       color: black;
-      padding: 10px 20px;
+      font-size: 16px;
       border: none;
-      font-weight: bold;
       border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+      align-self: flex-start;
     }
-    button.submit-btn:hover {
+    button[type="submit"]:hover {
       background-color: #e6b800;
     }
 
+    /* Message Styles */
     .message { padding: 10px; margin-bottom: 20px; border-radius: 5px; font-weight: bold; }
     .success { background-color: #28a745; color: white; }
     .error { background-color: #dc3545; color: white; }
@@ -74,13 +80,13 @@
 <div class="sidebar">
   <div class="user-info">
     <img src="user-avatar.jpg" alt="User Avatar">
-    <h3>Tenant Name</h3> <!-- Replace with actual tenant name if needed -->
+    <h3>Tenant Name</h3>
   </div>
   <div class="features">
     <button><a href="/tenant-payments" style="color: white; text-decoration: none;">View Payments</a></button>
     <button><a href="/tenant-announcement" style="color: white; text-decoration: none;">Announcements</a></button>
-    <button><a href="/tenant-complaint" style="color: white; text-decoration: none;">Complaints</a></button>
-    <button class="active"><a href="/tenant/leave-requests" style="color: white; text-decoration: none;">Leave Requests</a></button>
+    <button class="active"><a href="/tenant/complaints" style="color: white; text-decoration: none;">Complaints</a></button>
+    <button><a href="/tenant-leave-request" style="color: white; text-decoration: none;">Leave Requests</a></button>
   </div>
   <form th:action="@{/logout}" method="post">
     <button class="logout" type="submit">Logout</button>
@@ -89,33 +95,23 @@
 
 <!-- Main Content -->
 <div class="main-content">
-  <div class="breadcrumb">Dashboard / Leave Request</div>
+  <div class="breadcrumb">Dashboard / Complaints</div>
 
-  <!-- Display Success/Error Messages -->
-  <div th:if="${param.success}" class="message success">Leave request submitted successfully.</div>
-  <div th:if="${param.error}" class="message error">There was an error with the leave request.</div>
+  <!-- Display Success/Error Message -->
+  <div th:if="${successMessage}" class="message success" th:text="${successMessage}"></div>
+  <div th:if="${error}" class="message error" th:text="${error}"></div>
 
-  <!-- Leave Request Form -->
+  <!-- Complaint Form -->
   <div class="card">
-    <h2>Submit Leave Request</h2>
-    <form th:action="@{/tenant/submit-leave-request}" method="post">
-      <!-- Hidden tenantName field that gets the current authenticated tenant name -->
-      <input type="hidden" name="tenantName" th:value="${#authentication.name}" />
+    <h2>Submit a Complaint</h2>
+    <form th:action="@{/submit-report}" method="post">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" required>
 
-      <label for="reason">Reason:</label>
-      <textarea id="reason" name="reason" required placeholder="Enter reason for leaving..."></textarea>
+      <label for="description">Message:</label>
+      <textarea id="description" name="description" required></textarea>
 
-      <label for="targetLeaveDate">Target Leave Date:</label>
-      <input type="date" id="targetLeaveDate" name="targetLeaveDate" required>
-
-      <label for="roomId">Room:</label>
-      <select name="roomId" id="roomId" required>
-        <option value="" selected disabled>Select Room</option>
-        <!-- Thymeleaf to iterate over rooms -->
-        <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
-      </select>
-
-      <button type="submit" class="submit-btn">Submit</button>
+      <button type="submit">Submit Complaint</button>
     </form>
   </div>
 </div>
