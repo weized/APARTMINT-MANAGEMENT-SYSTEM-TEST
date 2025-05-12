@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/tenant/reports") // Optional: helps group related paths
@@ -24,8 +25,9 @@ public class ReportController {
 
     // Handle form submission
     @PostMapping("")
-    public String submitReport(@ModelAttribute Report report) {
+    public String submitReport(@ModelAttribute Report report, RedirectAttributes redirectAttributes) {
         reportRepository.save(report);
+        redirectAttributes.addFlashAttribute("successMessage", "Complaint submitted successfully.");
         return "redirect:/tenant/reports";
     }
 

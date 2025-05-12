@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 
@@ -28,7 +29,8 @@ public class LeaveRequestController {
     @PostMapping("/leave/submit")
     public String submitLeaveRequest(
             @RequestParam("targetLeaveDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate targetLeaveDate,
-            @RequestParam("reason") String reason
+            @RequestParam("reason") String reason,
+            RedirectAttributes redirectAttributes
     ) {
         LeaveRequest leaveRequest = new LeaveRequest();
         leaveRequest.setTargetLeaveDate(targetLeaveDate);
@@ -36,6 +38,7 @@ public class LeaveRequestController {
 
         leaveRequestRepository.save(leaveRequest);
 
+        redirectAttributes.addFlashAttribute("successMessage", "Leave request submitted successfully!");
         // After saving, redirect to avoid form resubmission
         return "redirect:/tenant/leave";
     }
