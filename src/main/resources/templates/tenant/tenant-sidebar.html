@@ -10,7 +10,9 @@
             <li><a th:href="@{/tenant-payments/list}">Payments</a></li>
             <li><a th:href="@{/tenant/reports}">Add Complaints</a></li>
             <li><a th:href="@{/tenant-leave}">Leave Request</a></li>
-            <li><a th:href="@{/login}">Logout</a></li>
+            <form th:action="@{/logout}" method="post">
+                <button class="logout" type="submit">Logout</button>
+            </form>
         </ul>
     </nav>
 </div>
