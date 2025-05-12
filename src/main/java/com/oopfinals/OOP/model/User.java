@@ -1,33 +1,23 @@
 package com.oopfinals.OOP.model;
 
-
 import jakarta.persistence.*;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-@Data
 @Entity
 @Table(name = "tenants")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(nullable = false, unique = true, length = 30)
     private String username;
-
 
     @Column(nullable = false, length = 25)
     private String middleName;
 
-
     @Column(nullable = false, length = 10)
     private String gender;
-
 
     @Column(nullable = false, length = 20)
     private String birthday;
@@ -35,14 +25,11 @@ public class User {
     @Column(nullable = false, length = 11)
     private String phoneNumber;
 
-
     @Column(nullable = false, unique = true, length = 50)
     private String email;
 
-
     @Column(nullable = false, length = 64)
     private String password;
-
 
     @Column(nullable = false, length = 25)
     private String firstName;
@@ -50,9 +37,11 @@ public class User {
     @Column(nullable = false, length = 25)
     private String lastName;
 
-
     @Column(nullable = false, length = 10)
     private String account_role;
+
+    // Getters and Setters
+
     public Long getId() {
         return id;
     }
