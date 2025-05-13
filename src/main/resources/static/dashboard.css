@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url("http://localhost:63342/tenant%20section/src/main/resources/static/images/background.png") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: none;
+}
+
+.content {
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.content h1 {
+    font-size: 42px;
+    font-weight: bold;
+    margin-top: 100px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.content .subtitle {
+    font-size: 16px;
+    font-style: italic;
+    margin-bottom: 50px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Button cards */
+.center-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.center-buttons button {
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    border-radius: 12px;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.center-buttons button:hover {
+    transform: translateY(-5px);
+}
+
+/* Sidebar compatibility */
+.sidebar.active ~ .content {
+    margin-left: 100px;
+}
+
+.sidebar ~ .content {
+    margin-left: 0;
+}
+
+.subtitle {
+    font-size: 16px;
+    font-style: italic;
+    margin-bottom: 40px;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+}
