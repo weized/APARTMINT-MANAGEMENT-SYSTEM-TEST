@@ -34,7 +34,8 @@
   </div>
   <form action="/tenant/leave/submit" method="post" th:object="${leaveRequest}">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
+    <label for="targetLeaveDate">Tenant Name:</label>
+    <input  id="tenantName" name="tenantName" required><br>
     <label for="targetLeaveDate">Target Leave Date:</label>
     <input type="date" id="targetLeaveDate" name="targetLeaveDate" required><br>
 

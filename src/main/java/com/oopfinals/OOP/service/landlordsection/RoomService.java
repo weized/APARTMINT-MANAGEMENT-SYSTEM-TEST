@@ -20,18 +20,21 @@ public class RoomService {
     @Autowired
     private PaymentRepository paymentRepository;
 
-    // Get all room payments from the database
+    /**
+     * Returns all room payment info with tenant count, rent, bill, and payment status.
+     */
     public List<RoomPaymentInfo> getAllRoomPayments() {
         List<RoomPaymentInfo> roomPayments = new ArrayList<>();
         List<Room> rooms = roomRepository.findAll();
 
         for (Room room : rooms) {
             RoomPaymentInfo roomPaymentInfo = new RoomPaymentInfo();
-            roomPaymentInfo.setName(room.getName());
-            roomPaymentInfo.setNumberOfTenants(room.getTenants().size()); // assumes getTenants() returns a List
-            roomPaymentInfo.setMonthlyRent(room.getMonthlyRent());
-            roomPaymentInfo.setMonthlyBill(room.getMonthlyBill());
+            roomPaymentInfo.setRoomNumber(room.getRoomNumber());
+            roomPaymentInfo.setNumberOfTenants(room.getTenants().size());
+            roomPaymentInfo.setMonthlyRent(room.getRent());  // renamed from getMonthlyRent()
+            roomPaymentInfo.setMonthlyBill(0.0); // Placeholder, update if monthlyBill exists
 
+            // If your paymentRepository supports this method
             roomPaymentInfo.setPaymentStatus(
                     paymentRepository.getPaymentStatusForRoom(room.getId())
             );
@@ -42,32 +45,48 @@ public class RoomService {
         return roomPayments;
     }
 
-    // Get all rooms from the repository
+    /**
+     * Returns a list of all rooms.
+     */
     public List<Room> getAllRooms() {
         return roomRepository.findAll();
     }
 
-    // Get a room by its ID
+    /**
+     * Returns a specific room by its ID.
+     */
     public Room getRoomById(Long id) {
         return roomRepository.findById(id).orElse(null);
     }
 
-    // Save a room to the database
+    /**
+     * Saves or updates a room entity.
+     */
     public void saveRoom(Room room) {
         roomRepository.save(room);
     }
 
-    // ✅ NEW: Get all available rooms (e.g., rooms with 0 tenants or marked as available)
+    /**
+     * Returns rooms that currently have no tenants (available).
+     */
     public List<Room> getAvailableRooms() {
         return roomRepository.findAll().stream()
-                .filter(room -> room.getTenants().isEmpty()) // or use room.isAvailable() if such a field exists
+                .filter(room -> room.getTenants() == null || room.getTenants().isEmpty())
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Temporary method to return dummy room data (replace with real logic if needed).
+     */
     public Room getRoomDetails() {
-        // Simulated room data; replace this with actual database logic
         Room room = new Room();
         room.setId(1L);
-        room.setRoomNumber("A101");
+        room.setRoomNumber("101");
+        room.setRent(12000.0);
         return room;
+    }
+
+    public Room getRoomByRoomNumber(String roomNumber) {
+        return null;
     }
 }

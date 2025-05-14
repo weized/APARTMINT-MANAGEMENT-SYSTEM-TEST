@@ -3,7 +3,8 @@
 <head>
     <title>Apartment Information</title>
     <style>
-        /* General body setup */
+        /* Your existing styles preserved and enhanced with tab styles */
+
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
@@ -11,7 +12,6 @@
             display: flex;
         }
 
-        /* Sidebar */
         .sidebar {
             width: 250px;
             background-color: #0c1c3d;
@@ -79,14 +79,12 @@
             background-color: darkred;
         }
 
-        /* Main Content */
         .main-content {
             margin-left: 250px;
             width: calc(100% - 250px);
             padding: 20px;
         }
 
-        /* Breadcrumb */
         .breadcrumb {
             background-color: #ffc107;
             padding: 10px 20px;
@@ -95,16 +93,34 @@
             margin-bottom: 20px;
         }
 
-        /* Card layout */
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            background-color: #eeeeee;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px 5px 0 0;
+            transition: background-color 0.3s ease;
+        }
+
+        .tab-button.active {
+            background-color: #ffc107;
+        }
+
         .card {
             background-color: white;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
+            margin-top: 0;
         }
 
-        /* Table */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -141,7 +157,6 @@
             color: #555;
         }
 
-        /* View Tenants Button */
         .btn {
             background-color: #ffc402;
             padding: 10px 20px;
@@ -152,12 +167,27 @@
             text-align: center;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            margin-top: 10px;
         }
 
         .btn:hover {
             background-color: #e6b800;
         }
+
     </style>
+    <script>
+        function showTab(tab) {
+            document.getElementById("apartmentSection").style.display = tab === 'apartment' ? 'block' : 'none';
+            document.getElementById("leaveRequestSection").style.display = tab === 'leave' ? 'block' : 'none';
+
+            document.getElementById("apartmentTab").classList.toggle("active", tab === 'apartment');
+            document.getElementById("leaveTab").classList.toggle("active", tab === 'leave');
+        }
+
+        window.onload = function () {
+            showTab('apartment'); // Default tab
+        }
+    </script>
 </head>
 
 <body>
@@ -165,15 +195,15 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <div class="user-info">
-        <img src="user-avatar.jpg" alt="User Avatar">
-        <h3>Mr Landlord</h3>
+        <img th:src="@{/images/user-avatar.jpg}" alt="User Avatar">
+        <h3><span th:text="${username}">Username</span></h3>
     </div>
     <div class="features">
-        <a href="/landlord/apartment-info" class="feature-link active">Apartment Information</a>
+        <a href="#" class="feature-link active">Apartment Information</a>
         <a href="/landlord/payments" class="feature-link">Manage Payments</a>
-        <a href="/landlord/complaints" class="feature-link">View Complaints</a>
+        <a th:href="@{/landlord/complaints}" class="feature-link">View Complaints</a>
         <a href="/landlord/announcements" class="feature-link">Announcements</a>
-        <a href="/landlord/revenue" class="feature-link">Revenue</a>
+
     </div>
     <form th:action="@{/logout}" method="post">
         <button class="logout" type="submit">Logout</button>
@@ -184,58 +214,106 @@
 <div class="main-content">
     <div class="breadcrumb">Dashboard / Apartment Information</div>
 
-    <!-- Apartment Information Table -->
-    <div class="card">
-        <h2>Apartment Information</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Room</th>
-                <th>Price</th>
-                <th>Max Tenants</th>
-                <th>Regulations</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="room : ${rooms}">
-                <td th:text="${room.roomNumber}"></td> <!-- Display Room Number -->
-                <td th:text="${room.rent}"></td> <!-- Display Rent -->
-                <td th:text="${room.maxTenants}"></td> <!-- Display Max Tenants -->
-                <td>
-                    <ul>
-                        <!-- Displaying Regulations for Each Room -->
-                        <li th:each="reg : ${room.regulations}" th:text="${reg.description}"></li>
-                    </ul>
-                </td>
-                <td>
-                    <!-- View Tenants Button -->
-                    <a th:href="@{/landlord/room-tenants/{id}/tenants(id=${room.id})}" class="btn">View Tenants</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <!-- Tab Buttons -->
+    <div class="tab-buttons">
+        <button id="apartmentTab" class="tab-button" onclick="showTab('apartment')">Apartment Information</button>
+        <button id="leaveTab" class="tab-button" onclick="showTab('leave')">Show Leave Requests</button>
     </div>
 
-    <!-- Add New Regulation Form -->
-    <div class="card">
-        <h2>Add New Regulation</h2>
-        <form th:action="@{/landlord/add-regulation}" method="post">
-            <label for="roomId">Select Room:</label>
-            <select id="roomId" name="roomId" required>
-                <option value="" disabled selected>Select a Room or All</option>
-                <option value="all">All Rooms</option>
-                <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.roomNumber}"></option>
-            </select>
+    <!-- Apartment Info Section -->
+    <div id="apartmentSection">
+        <div class="card">
+            <h2>Apartment Information</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Room</th>
+                    <th>Price</th>
+                    <th>Max Tenants</th>
+                    <th>Regulations</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="room : ${rooms}">
+                    <td th:text="${room.roomNumber}"></td>
+                    <td th:text="${room.rent}"></td>
+                    <td th:text="${room.maxTenants}"></td>
+                    <td>
+                        <ul>
+                            <li th:each="reg : ${room.regulations}" th:text="${reg.description}"></li>
+                            <li th:if="${#lists.isEmpty(room.regulations)}">No regulations available</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <a th:href="@{/landlord/room-tenants/{id}/tenants(id=${room.id})}" class="btn">View Tenants</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-            <label for="description">Regulation Description:</label>
-            <input type="text" id="description" name="description" required placeholder="Enter regulation...">
+        <div class="card">
+            <h2>Add New Regulation</h2>
+            <form th:action="@{/landlord/add-regulation}" method="post">
+                <label for="roomId">Select Room:</label>
+                <select id="roomId" name="roomId" required>
+                    <option value="" disabled selected>Select a Room or All</option>
+                    <option value="all">All Rooms</option>
+                    <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.roomNumber}"></option>
+                </select>
 
-            <button type="submit">Add Regulation</button>
-        </form>
+                <label for="description">Regulation Description:</label>
+                <input type="text" id="description" name="description" required placeholder="Enter regulation...">
+
+                <button type="submit" class="btn">Add Regulation</button>
+            </form>
+        </div>
     </div>
 
-</div>
+    <!-- Leave Request Section -->
+    <div id="leaveRequestSection">
+        <div class="card">
+            <h2>Tenant Leave Requests</h2>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Tenant Name</th>
+                    <th>Reason</th>
+                    <th>Target Leave Date</th>
+                    <th>Status</th> <!-- ✅ Add status header here -->
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Loop through leaveRequests passed from the controller -->
+                <tr th:each="request : ${leaveRequests}">
+                    <td th:text="${request.tenantName}">Tenant Name</td>
+                    <td th:text="${request.reason}">Reason</td>
+                    <td th:text="${#temporals.format(request.targetLeaveDate, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${request.status}">Pending</td> <!-- ✅ Show status value here -->
+
+                    <!-- Action Buttons -->
+                    <td>
+                        <!-- Approve Form -->
+                        <form th:action="@{/landlord/leave-request/approve}" method="post" style="display: inline;">
+                            <input type="hidden" name="requestId" th:value="${request.id}" />
+                            <button type="submit" class="btn">Approve</button>
+                        </form>
+
+                        <!-- Disapprove Form -->
+                        <form th:action="@{/landlord/leave-request/disapprove}" method="post" style="display: inline;">
+                            <input type="hidden" name="requestId" th:value="${request.id}" />
+                            <button type="submit" class="btn" style="background-color: #f44336;">Disapprove</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 
 </body>
 </html>

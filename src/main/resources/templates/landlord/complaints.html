@@ -117,15 +117,15 @@
 <body>
 <div class="sidebar">
     <div class="user-info">
-        <img src="user-avatar.jpg" alt="User Avatar">
-        <h3>Mr Landlord</h3>
+        <img th:src="@{/images/user-avatar.jpg}" alt="User Avatar">
+        <h3><span th:text="${username}">Username</span></h3>
     </div>
     <div class="features">
-        <button><a href="/landlord/apartment" style="color: white; text-decoration: none;">Apartment Information</a></button>
+        <button><a href="/landlord/apartment-info" style="color: white; text-decoration: none;">Apartment Information</a></button>
         <button><a href="/landlord/payments" style="color: white; text-decoration: none;">Manage Payments</a></button>
         <button class="active"><a href="/landlord/complaints" style="color: white; text-decoration: none;">View Complaints</a></button>
         <button><a href="/landlord/announcements" style="color: white; text-decoration: none;">Announcements</a></button>
-        <button><a href="/landlord/revenue" style="color: white; text-decoration: none;">Revenue</a></button>
+
     </div>
     <form th:action="@{/logout}" method="post">
         <button class="logout" type="submit">Logout</button>
@@ -140,24 +140,17 @@
         <table>
             <thead>
             <tr>
-                <th>Tenant Name</th>
-                <th>Room</th>
-                <th>Complaint</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>Title</th>
+                <th>Description</th>
+
             </tr>
             </thead>
             <tbody>
-            <tr th:each="complaint : ${complaints}">
-                <td th:text="${complaint.tenantName}">Tenant Name</td>
-                <td th:text="${complaint.room.name}">Room Name</td>
-                <td th:text="${complaint.description}">Description</td>
-                <td th:text="${complaint.resolved ? 'Resolved' : 'Pending'}">Status</td>
-                <td>
-                    <form th:action="@{'/landlord/complaints/resolve/' + ${complaint.id}}" method="post">
-                        <button class="resolve-btn" type="submit" th:disabled="${complaint.resolved}">Mark Resolved</button>
-                    </form>
-                </td>
+            <tr th:each="report : ${complaints}">
+
+                <td th:text="${report.title}">Title</td>
+                <td th:text="${report.description}">Description</td>
+
             </tr>
             </tbody>
         </table>

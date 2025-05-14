@@ -39,18 +39,37 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
+    public List<Tenant> getTenantsWithoutFiledLeave() {
+        return tenantRepository.findByFiledLeaveFalse();  // Fetch tenants who have not filed leave
+    }
+
+    @Override
     public void addTenant(Tenant tenant, Long roomId) {
         Room room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new RuntimeException("Room not found with ID: " + roomId));
 
         tenant.setRoom(room);
         tenant.setRoomNumber(room.getRoomNumber());
-        tenant.setFiledLeave(false);
+        tenant.setFiledLeave(false);  // Default to not filed leave
         tenantRepository.save(tenant);
     }
 
     @Override
     public void addTenantToRoom(Tenant tenant, Long roomId) {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new RuntimeException("Room not found with ID: " + roomId));
 
+        tenant.setRoom(room);
+        tenant.setRoomNumber(room.getRoomNumber());
+        tenantRepository.save(tenant);  // Save the updated tenant with the new room
+    }
+
+    @Override
+    public void updateTenantLeaveStatus(Long tenantId, boolean filedLeave) {
+        Tenant tenant = tenantRepository.findById(tenantId)
+                .orElseThrow(() -> new RuntimeException("Tenant not found with ID: " + tenantId));
+
+        tenant.setFiledLeave(filedLeave);
+        tenantRepository.save(tenant);  // Save the updated tenant's leave status
     }
 }

@@ -1,6 +1,8 @@
 package com.oopfinals.OOP.controller.landlordsection;
 
+import com.oopfinals.OOP.model.Report;
 import com.oopfinals.OOP.model.landlordmodel.Complaint;
+import com.oopfinals.OOP.service.ReportService;
 import com.oopfinals.OOP.service.landlordsection.ComplaintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,23 +15,19 @@ import java.util.List;
 @RequestMapping("/landlord/complaints")
 public class ComplaintController {
 
-    private final ComplaintService complaintService;
+    private final ReportService reportService;
 
     @Autowired
-    public ComplaintController(ComplaintService complaintService) {
-        this.complaintService = complaintService;
+    public ComplaintController(ReportService reportService) {
+        this.reportService = reportService;
     }
 
     @GetMapping
     public String viewComplaints(Model model) {
-        List<Complaint> complaints = complaintService.getAllComplaints();
+        List<Report> complaints = reportService.getAllReports();
         model.addAttribute("complaints", complaints);
         return "landlord/complaints"; // Thymeleaf template name
     }
 
-    @PostMapping("/resolve/{id}")
-    public String resolveComplaint(@PathVariable Long id) {
-        complaintService.resolveComplaint(id);
-        return "redirect:/landlord/complaints";
-    }
+
 }

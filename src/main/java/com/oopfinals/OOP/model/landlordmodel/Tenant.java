@@ -12,7 +12,7 @@ public class Tenant {
 
     private String username;
     private String roomNumber;
-    private String firstName;  // Changed from firstnameName to firstName
+    private String firstName;
     private String middleName;
     private String lastName;
     private String phoneNumber;
@@ -24,26 +24,35 @@ public class Tenant {
     private boolean filedLeave;
 
     @ManyToOne
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "room_id", referencedColumnName = "id")
     private Room room;
+
+    @Column(nullable = false)
+    private boolean leaveApproved = false;
+
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private Boolean requestingLeave = false;
 
     // Constructors
     public Tenant() {}
 
     public Tenant(String username, String firstName, String middleName, String lastName,
-                  String email, String phoneNumber, String roomNumber, boolean filedLeave, Room room) {
+                  String email, String phoneNumber, String roomNumber,
+                  boolean filedLeave, Boolean leaveApproved, Room room) {
         this.username = username;
-        this.firstName = firstName;  // Updated to firstName
+        this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.roomNumber = roomNumber;
         this.filedLeave = filedLeave;
+        this.leaveApproved = leaveApproved != null ? leaveApproved : false;
         this.room = room;
     }
 
     // Getters and Setters
+
     public Long getId() {
         return id;
     }
@@ -69,11 +78,11 @@ public class Tenant {
     }
 
     public String getFirstName() {
-        return firstName;  // Updated to firstName
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;  // Updated to firstName
+        this.firstName = firstName;
     }
 
     public String getMiddleName() {
@@ -124,10 +133,40 @@ public class Tenant {
         this.room = room;
     }
 
-    // Method to return the full name of the tenant
-    public String getName() {
-        return firstName + " " + (middleName != null ? middleName + " " : "") + lastName;
+    public Boolean getLeaveApproved() {
+        return leaveApproved;
     }
 
-    // Removed setRoomId method as it's not needed
+    public void setLeaveApproved(Boolean leaveApproved) {
+        this.leaveApproved = leaveApproved;
+    }
+
+    public Boolean getRequestingLeave() {
+        return requestingLeave;
+    }
+
+    public void setRequestingLeave(Boolean requestingLeave) {
+        this.requestingLeave = requestingLeave;
+    }
+
+    // ✅ Safe and trimmed full name method
+    public String getName() {
+        StringBuilder fullName = new StringBuilder();
+
+        if (firstName != null && !firstName.isBlank()) {
+            fullName.append(firstName.trim()).append(" ");
+        }
+        if (middleName != null && !middleName.isBlank()) {
+            fullName.append(middleName.trim()).append(" ");
+        }
+        if (lastName != null && !lastName.isBlank()) {
+            fullName.append(lastName.trim());
+        }
+
+        return fullName.toString().trim();
+    }
+
+    public String getFullName() {
+        return "";
+    }
 }

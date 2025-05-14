@@ -67,7 +67,7 @@ public class AppController {
             if("tenant".equalsIgnoreCase(existingUser.getAccount_role())){
                 return "/tenant/tenant-index"; // Redirect to home page or dashboard
             } else {
-                return "/landlord/landlordmenupage";
+                return "/landlord/apartment";
             }
         } else {
             // Failed login

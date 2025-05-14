@@ -30,7 +30,6 @@ public class LandlordApartmentController {
     @GetMapping("/landlord/apartment")
     public String showApartmentPage(Model model) {
         model.addAttribute("rooms", roomService.getAllRooms());
-
         return "landlord/apartment"; // templates/landlord/apartment.html
     }
 
@@ -49,7 +48,7 @@ public class LandlordApartmentController {
         return "landlord/add-regulation"; // templates/landlord/add-regulation.html
     }
 
-    // Handle form submission
+    // Handle form submission for regulation
     @PostMapping("/landlord/rooms/regulations")
     public String addRegulation(@ModelAttribute Regulation regulation, @RequestParam Long roomId) {
         Room room = roomService.getRoomById(roomId);
@@ -57,6 +56,7 @@ public class LandlordApartmentController {
         regulationService.save(regulation);
         return "redirect:/landlord/apartment";
     }
+
 
 
 }

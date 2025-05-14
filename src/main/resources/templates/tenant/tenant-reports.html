@@ -1,62 +1,62 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>Reports</title>
-  <link rel="stylesheet" th:href="@{/sidebar.css}">
-<style>
-  .alert-success {
-  background-color: #d4edda;
-  color: #155724;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-    text-align: center;
-  transition: opacity 1s ease-out;
-  }
-
-  .alert-success.hidden {
-  opacity: 0;
-  }
-  </style>
-</head>
-<body>
-
-<div th:replace="~{tenant/tenant-sidebar-button :: sidebarBtn}"></div>
-<div th:replace="~{tenant/tenant-sidebar :: sidebarMenu}"></div>
-
-<h1>ADD COMPLAINTS</h1>
-
-<div class="content">
-  <div th:if="${successMessage}" id="successMessage" class="alert alert-success">
-    <p th:text="${successMessage}"></p>
-  </div>
-  <form th:action="@{/tenant/reports}" th:object="${report}" method="post">
-
-    <label for="title">Title:</label>
-    <input type="text" id="title" th:field="*{title}" />
-
-    <label for="description">Description:</label>
-    <textarea id="description" th:field="*{description}"></textarea>
-
-    <button type="submit">Submit</button>
-  </form>
-
-
-
-</div>
-<script>
-  window.addEventListener("DOMContentLoaded", () => {
-    const message = document.getElementById("successMessage");
-    if (message) {
-      setTimeout(() => {
-        message.style.display = "none";
-      }, 5000); // 4000ms = 4 seconds
+  <!DOCTYPE html>
+  <html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>Reports</title>
+    <link rel="stylesheet" th:href="@{/sidebar.css}">
+  <style>
+    .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+      text-align: center;
+    transition: opacity 1s ease-out;
     }
-  });
-</script>
 
-<script th:src="@{/sidebar.js}"></script>
+    .alert-success.hidden {
+    opacity: 0;
+    }
+    </style>
+  </head>
+  <body>
 
-</body>
-</html>
+  <div th:replace="~{tenant/tenant-sidebar-button :: sidebarBtn}"></div>
+  <div th:replace="~{tenant/tenant-sidebar :: sidebarMenu}"></div>
+
+  <h1>ADD COMPLAINTS</h1>
+
+  <div class="content">
+    <div th:if="${successMessage}" id="successMessage" class="alert alert-success">
+      <p th:text="${successMessage}"></p>
+    </div>
+    <form th:action="@{/tenant/reports}" th:object="${report}" method="post">
+
+      <label for="title">Title:</label>
+      <input type="text" id="title" th:field="*{title}" />
+
+      <label for="description">Description:</label>
+      <textarea id="description" th:field="*{description}"></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+
+
+
+  </div>
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const message = document.getElementById("successMessage");
+      if (message) {
+        setTimeout(() => {
+          message.style.display = "none";
+        }, 5000); // 4000ms = 4 seconds
+      }
+    });
+  </script>
+
+  <script th:src="@{/sidebar.js}"></script>
+
+  </body>
+  </html>

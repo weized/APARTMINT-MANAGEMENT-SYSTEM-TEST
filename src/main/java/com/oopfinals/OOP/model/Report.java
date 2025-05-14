@@ -12,7 +12,9 @@ public class Report {
     private String description;
 
     // Getters and setters
-
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
     public Long getId() {
         return id;
     }
@@ -35,5 +37,12 @@ public class Report {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

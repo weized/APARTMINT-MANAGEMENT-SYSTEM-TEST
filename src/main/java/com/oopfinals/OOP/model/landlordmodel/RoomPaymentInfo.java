@@ -47,4 +47,7 @@ public class RoomPaymentInfo {
     public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
+
+    public void setRoomNumber(String roomNumber) {
+    }
 }

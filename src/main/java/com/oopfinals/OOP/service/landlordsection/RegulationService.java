@@ -4,6 +4,7 @@ import com.oopfinals.OOP.model.landlordmodel.Regulation;
 import com.oopfinals.OOP.model.landlordmodel.Room;
 import com.oopfinals.OOP.repository.landlordsection.RegulationRepository;
 import com.oopfinals.OOP.repository.landlordsection.RoomRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +13,13 @@ import java.util.List;
 public class RegulationService {
 
     private final RoomRepository roomRepository;
-    private final RegulationRepository regulationRepository;
+
+
+    @Autowired
+    private RegulationRepository regulationRepository;
+
+    @Autowired
+    private RoomService roomService;
 
     public RegulationService(RoomRepository roomRepository, RegulationRepository regulationRepository) {
         this.roomRepository = roomRepository;
@@ -21,22 +28,19 @@ public class RegulationService {
 
     // Add regulation to a specific room
     public void addRegulationToRoom(Long roomId, String description) {
-        Room room = roomRepository.findById(roomId)
-                .orElseThrow(() -> new RuntimeException("Room not found with ID: " + roomId));  // Better exception handling
-        Regulation regulation = new Regulation();
-        regulation.setDescription(description);
-        regulation.setRoom(room);
-        regulationRepository.save(regulation);
+        Room room = roomService.getRoomById(roomId);
+        if (room != null) {
+            Regulation regulation = new Regulation();
+            regulation.setRoom(room);
+            regulation.setDescription(description);
+            regulationRepository.save(regulation);
+        }
     }
 
-    // Add regulation to all rooms
     public void addRegulationToAllRooms(String description) {
-        List<Room> rooms = roomRepository.findAll();
+        List<Room> rooms = roomService.getAllRooms();
         for (Room room : rooms) {
-            Regulation regulation = new Regulation();
-            regulation.setDescription(description);
-            regulation.setRoom(room);
-            regulationRepository.save(regulation);
+            addRegulationToRoom(room.getId(), description);  // Reuse the above method
         }
     }
 

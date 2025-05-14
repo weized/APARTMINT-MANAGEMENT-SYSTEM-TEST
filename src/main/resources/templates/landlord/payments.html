@@ -152,15 +152,16 @@
 <body>
 <div class="sidebar">
     <div class="user-info">
-        <img src="user-avatar.jpg" alt="User Avatar">
-        <h3>Mr Landlord</h3>
+
+        <img th:src="@{/images/user-avatar.jpg}" alt="User Avatar">
+        <h3><span th:text="${username}">Username</span></h3>
     </div>
     <div class="features">
-        <button><a href="/landlord/apartment" style="color: white; text-decoration: none;">Apartment Information</a></button>
+        <button><a href="/landlord/apartment-info" style="color: white; text-decoration: none;">Apartment Information</a></button>
         <button class="active">Manage Payments</button>
         <button><a href="/landlord/complaints" style="color: white; text-decoration: none;">View Complaints</a></button>
         <button><a href="/landlord/announcements" style="color: white; text-decoration: none;">Announcements</a></button>
-        <button><a href="/landlord/revenue" style="color: white; text-decoration: none;">Revenue</a></button>
+
     </div>
     <form th:action="@{/logout}" method="post">
         <button class="logout" type="submit">Logout</button>
@@ -192,9 +193,7 @@
                     <span th:if="${payment.paymentStatus == 'PAID'}" class="status-paid">Paid</span>
                     <span th:if="${payment.paymentStatus == 'UNPAID'}" class="status-unpaid">
                         Unpaid
-                        <button class="reminder-button" th:data-room-name="${payment.roomName}" onclick="sendReminder(this)">
-                            Send Reminder
-                        </button>
+
                     </span>
                 </td>
             </tr>
@@ -203,13 +202,7 @@
     </div>
 </div>
 
-<script>
-    function sendReminder(button) {
-        const roomName = button.getAttribute('data-room-name');
-        alert('Reminder sent for room: ' + roomName);
-        // Future: Send an actual request to backend to send a real reminder
-    }
-</script>
+
 
 </body>
 </html>

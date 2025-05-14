@@ -51,11 +51,11 @@
 
 <div class="sidebar">
     <div class="user-info">
-        <img src="user-avatar.jpg" alt="User Avatar">
-        <h3>Mr Landlord</h3>
+        <img th:src="@{/images/user-avatar.jpg}" alt="User Avatar">
+        <h3><span th:text="${username}">Username</span></h3>
     </div>
     <div class="features">
-        <button><a href="/landlord/apartment" style="color: white; text-decoration: none;">Apartment Information</a></button>
+        <button><a href="/landlord/apartment-info" style="color: white; text-decoration: none;">Apartment Information</a></button>
         <button><a href="/landlord/payments" style="color: white; text-decoration: none;">Manage Payments</a></button>
         <button><a href="/landlord/complaints" style="color: white; text-decoration: none;">View Complaints</a></button>
         <button><a href="/landlord/announcements" style="color: white; text-decoration: none;">Announcements</a></button>

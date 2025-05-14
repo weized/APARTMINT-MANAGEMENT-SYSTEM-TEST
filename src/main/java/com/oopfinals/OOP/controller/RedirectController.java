@@ -11,7 +11,7 @@ public class RedirectController {
     public String redirectByRole(Authentication authentication) {
         if (authentication != null && authentication.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_LANDLORD"))) {
-            return "/landlord/landlordmenupage";  // Change to your actual dashboard URL
+            return "/landlord/apartment";  // Change to your actual dashboard URL
         } else if (authentication != null && authentication.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_TENANT"))) {
             return "/tenant/tenant-index";  // Optional: if you support tenants
