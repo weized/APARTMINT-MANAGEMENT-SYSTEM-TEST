@@ -2,57 +2,396 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Announcements</title>
-  <link rel="stylesheet" th:href="@{/sidebar.css}">
+  <title>Dashboard</title>
+  <style>
+    /* General body layout */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url("/images/pattern.png") no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header {
+      display: none;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+      width: 100%;
+      transition: margin-left 0.3s ease;
+    }
+    .sidebar.active ~ .container {
+      margin-left: 230px;
+    }
+
+    .sidebar ~ .container {
+      margin-left: 0;
+    }
+    .content {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      font-style: italic;
+      margin-bottom: 40px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 12px;
+      margin: 20px auto;
+      padding: 15px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease-in-out;
+      color: black;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card a {
+      text-decoration: none;
+      color: black;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .card p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 200px;
+      height: 100%;
+      background-color: #0a1a3c;
+      color: white;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .hamburger {
+      position: fixed;
+      top: 20px;
+      left: 5px;
+      font-size: 28px;
+      cursor: pointer;
+      color: black;
+      z-index: 1100;
+      background: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+
+    .profile .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 55px;
+    }
+
+    .avatar {
+      background: black;
+      color: #0a1a3c;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden; /* Ensures the image stays inside the circle */
+    }
+
+    .avatar img {
+      width: 180%;
+      height: 180%;
+      object-fit: contain;
+    }
+
+    .menu-links a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      margin: 5px 0;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .menu-links a img {
+      width: 24px;
+      height: 25px;
+      flex-shrink: 0;
+    }
+
+    .menu-links a:hover,
+    .menu-links a.active {
+      background: #f1c40f;
+      color: black;
+      font-weight: bold;
+    }
+
+    .announcement-tabs-container {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+
+
+    .announcement-tabs {
+      background: none;
+    }
+
+    .announcement-tabs button {
+      background: white;
+      border: none;
+      padding: 10px 25px;
+      margin: 0 10px;
+      font-weight: bold;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      font-size: 16px;
+    }
+
+    .announcement-tabs button.active {
+      background: white;
+      color: #0a1a3c;
+      border: 2px solid #0a1a3c;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #121C3E;
+      margin-left: 20px;
+      margin-top: 260px;
+    }
+
+    .breadcrumb {
+      background-color: #f1c40f;
+      padding: 12px 0 12px 43px;
+      font-weight: bold;
+      color: black;
+      font-size: 16px;
+      border-radius: 6px;
+      margin: 20px auto 10px;
+      width: 90%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      text-align: left;
+    }
+
+
+    .announcement-box {
+      background-color: white;
+      color: #121C3E;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      width: 85%;
+      max-width: 900px;
+    }
+
+    .announcement-inner-box {
+      background-color: #e3edf9;
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 15px;
+    }
+
+    .announcement-date {
+      font-size: 14px;
+      color: #121C3E;
+      text-align: center;
+    }
+
+    .logout button {
+      width: 100%;
+      padding: 15px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 29px 0;
+    }
+  </style>
 </head>
+
 <body>
-<div th:replace="~{tenant/tenant-sidebar-button :: sidebarBtn}"></div>
-<div th:replace="~{tenant/tenant-sidebar :: sidebarMenu}"></div>
 
-<div>
-  <button onclick="showSection('all')">All</button>
-  <button onclick="showSection('notice')">Room Notice</button>
-  <button onclick="showSection('rules')">Room Rules</button>
+<!-- Sidebar toggle button -->
+<div class="hamburger" onclick="toggleSidebar()">
+  <img src="/images/sidebar.svg" alt="Sidebar Menu" style="width: 35px; height: 30px;">
 </div>
 
-<div id="all">
-  <h3>All Announcements</h3>
-  <div th:each="announcement : ${announcements}" style="border: 1px solid #ccc; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #f9f9f9;">
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
+  <div class="profile">
+    <div class="user-info">
+      <div class="avatar">
+        <img src="/images/usericon.svg" alt="User Icon">
+      </div>
+      <div>
+        <strong th:text="${username}">Username</strong><br>
+      </div>
+    </div>
+  </div>
 
-    <div th:text="${announcement.content }" style="margin: 10px 0;"></div>
-    <div style="font-size: 0.9em; color: gray;" th:text="${#temporals.format(announcement.postedAt, 'MMMM dd, yyyy')}"></div>
+
+  <div class="menu-links">
+    <a th:href="@{/tenant-index}">
+      <img src="/images/dashboard.png" alt="Dashboard Icon"> Dashboard
+    </a>
+    <a th:href="@{/tenant-announcement}">
+      <img src="/images/announcements.png" alt="Announcements Icon"> Announcements
+    </a>
+    <a th:href="@{/tenant-payments/list}">
+      <img src="/images/payments.png" alt="Payments Icon"> Payments
+    </a>
+    <a th:href="@{/tenant/reports}">
+      <img src="/images/reports.png" alt="Reports Icon"> Add Complaints
+    </a>
+    <a th:href="@{/tenant-leave}">
+      <img src="/images/leaverequest.png" alt="Leave Request Icon"> Leave Request
+    </a>
+  </div>
+
+  <div class="logout">
+    <form th:action="@{/logout}" method="post">
+      <button type="submit">Logout</button>
+    </form>
   </div>
 </div>
 
+<!-- MAIN CONTENT CONTAINER -->
+<div class="container">
+  <h2 class="page-title">Announcements</h2>
+  <div class="announcement-tabs-container">
+    <div class="announcement-tabs">
 
-<div id="notice" style="display:none;">
-  <h3>Room Notices</h3>
-  <div th:each="n : ${roomNotices}" style="border: 1px solid #ccc; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #f9f9f9;">
-    <div><strong th:text="${n.title}"></strong></div>
-    <div th:text="${n.content}" style="margin: 10px 0;"></div>
-    <div style="font-size: 0.9em; color: gray;" th:if="${n.postedAt != null}" th:text="${n.postedAt}"></div>
+      <button class="active" onclick="switchTab('All', this)">All</button>
+      <button onclick="switchTab('Room Notice', this)">Room Notice</button>
+      <button onclick="switchTab('Room Rules', this)">Room Rules</button>
+    </div>
   </div>
-</div>
 
-<div id="rules" style="display:none;">
-  <h3>Room Rules</h3>
-  <div th:each="r : ${roomRules}" style="border: 1px solid #ccc; border-radius: 10px; padding: 15px; margin-bottom: 15px; background-color: #f9f9f9;">
-    <div><strong th:text="${r.title}"></strong></div>
-    <div th:text="${r.content}" style="margin: 10px 0;"></div>
-    <div style="font-size: 0.9em; color: gray;" th:if="${r.postedAt != null}" th:text="${r.postedAt}"></div>
+  <!--YELLOW TAB-->
+  <div id="breadcrumb" class="breadcrumb">Announcements &gt; All</div>
+
+  <!-- All Announcements -->
+  <div id="all-section" class="announcement-section">
+    <div th:each="announcement : ${announcements}" style="background-color: white; color: #121C3E; padding: 20px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+      <h2 th:text="${announcement.title}"></h2>
+      <div style="background-color: #dfeaff; padding: 10px; border-radius: 10px;">
+        <p style="font-size: 14px; color: #121C3E;" th:text="${#temporals.format(announcement.postedAt, 'MMMM dd, yyyy')}">[DATE HERE]</p>
+        <p th:text="${announcement.content}"></p>
+      </div>
+    </div>
   </div>
-</div>
 
-<script>
-  function showSection(id) {
-    document.getElementById('all').style.display = 'none';
-    document.getElementById('notice').style.display = 'none';
-    document.getElementById('rules').style.display = 'none';
-    document.getElementById(id).style.display = 'block';
-  }
-</script>
 
-<script th:src="@{/sidebar.js}"></script>
+  <!-- Room Notice Announcements -->
+  <div id="room-notice-section" class="announcement-section" style="display: none;">
+    <div th:each="n : ${roomNotices}" style="background-color: white; color: #121C3E; padding: 20px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+      <h2 th:text="${n.title}"></h2>
+      <div style="background-color: #dfeaff; padding: 10px; border-radius: 10px;">
+        <p style="font-size: 14px; color: #121C3E;" th:text="${#temporals.format(n.postedAt, 'MMMM dd, yyyy')}"></p>
+        <p th:text="${n.content}"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Room Rules Announcements -->
+  <div id="room-rules-section" class="announcement-section" style="display: none;">
+    <div th:each="r : ${roomRules}" style="background-color: white; color: #121C3E; padding: 20px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+      <h2 th:text="${r.title}"></h2> <!-- Dynamic title loaded from backend -->
+      <div style="background-color: #dfeaff; padding: 10px; border-radius: 10px;">
+        <p style="font-size: 14px; color: #121C3E;" th:text="${#temporals.format(r.postedAt, 'MMMM dd, yyyy')}"></p> <!-- Dynamic date format -->
+        <p th:text="${r.content}"></p> <!-- Content dynamically loaded from backend -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- JavaScript -->
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('active');
+    }
+
+    function switchTab(tabName, button) {
+      // Activate the selected button
+      document.querySelectorAll('.announcement-tabs button').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+
+// CHANGE BREADCRUMB
+      document.getElementById('breadcrumb').innerHTML = `Announcements &gt; ${tabName}`;
+
+//HIDE SECTION
+      document.querySelectorAll('.announcement-section').forEach(section => {
+        section.style.display = 'none';
+      });
+
+// SHOW BUTTON SELECT
+      if (tabName === 'All') {
+        document.getElementById('all-section').style.display = 'block';
+      } else if (tabName === 'Room Notice') {
+        document.getElementById('room-notice-section').style.display = 'block';
+      } else if (tabName === 'Room Rules') {
+        document.getElementById('room-rules-section').style.display = 'block';
+      }
+    }
+
+    // DEFAULT SHOW ALL BUTTON
+    window.onload = () => {
+      const defaultButton = document.querySelector('.announcement-tabs button.active');
+      if (defaultButton) {
+        switchTab('All', defaultButton);
+      }
+    };
+  </script>
 
 </body>
 </html>

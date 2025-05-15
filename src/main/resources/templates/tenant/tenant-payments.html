@@ -3,66 +3,347 @@
 <head>
   <title>Tenant Payments</title>
   <style>
-    table {
+    /* General body layout */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url("/images/pattern.png") no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header {
+      display: none;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+      width: 100%;
+      transition: margin-left 0.3s ease;
+    }
+    .sidebar.active ~ .container {
+      margin-left: 230px;
+    }
+
+    .sidebar ~ .container {
+      margin-left: 0;
+    }
+    .content {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      font-style: italic;
+      margin-bottom: 40px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 12px;
+      margin: 20px auto;
+      padding: 15px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease-in-out;
+      color: black;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card a {
+      text-decoration: none;
+      color: black;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .card p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 200px;
+      height: 100%;
+      background-color: #0a1a3c;
+      color: white;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .hamburger {
+      position: fixed;
+      top: 20px;
+      left: 5px;
+      font-size: 28px;
+      cursor: pointer;
+      color: black;
+      z-index: 1100;
+      background: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+
+    .profile .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 55px;
+    }
+
+    .avatar {
+      background: black;
+      color: #0a1a3c;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden; /* Ensures the image stays inside the circle */
+    }
+
+    .avatar img {
+      width: 180%;
+      height: 180%;
+      object-fit: contain;
+    }
+
+    .menu-links a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      margin: 5px 0;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .menu-links a img {
+      width: 24px;
+      height: 25px;
+      flex-shrink: 0;
+    }
+
+    .menu-links a:hover,
+    .menu-links a.active {
+      background: #f1c40f;
+      color: black;
+      font-weight: bold;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #121C3E;
+      margin-left: 20px;
+      margin-top: 300px;
+    }
+
+    .breadcrumb {
+      background-color: #f1c40f;
+      padding: 12px 0 12px 43px;
+      font-weight: bold;
+      color: black;
+      font-size: 16px;
+      border-radius: 6px;
+      margin: 20px auto 10px;
+      width: 90%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      text-align: left;
+    }
+    .payment-box {
+      background-color: white;
+      color: #121C3E;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .payment-box table {
       width: 100%;
       border-collapse: collapse;
     }
-    th, td {
-      padding: 10px;
+
+    .payment-box th {
+      background-color: #dfeaff;
+      color: #121C3E;
+      padding: 12px;
+      font-weight: bold;
       text-align: center;
     }
-    th {
-      background-color: #e6f2ff;
+
+    .payment-box td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
     }
-    button {
-      border: none;
-      padding: 8px 16px;
-      font-weight: bold;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .paid {
-      background-color: green;
+
+    .status-paid {
+      background-color: #2ecc71;
       color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-weight: bold;
     }
-    .unpaid {
+
+    .status-unpaid {
       background-color: red;
       color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    .logout button {
+      width: 100%;
+      padding: 15px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 29px 0;
     }
   </style>
 </head>
+
 <body>
-<div th:replace="~{tenant/tenant-sidebar-button :: sidebarBtn}"></div>
-<div th:replace="~{tenant/tenant-sidebar :: sidebarMenu}"></div>
 
-<h1>Tenant Payments</h1>
-<!-- Updated line to handle null payments -->
-<p th:text="'Number of payments: ' + ${payments != null ? #lists.size(payments) : 0}"></p>
-
-<table>
-  <thead>
-  <tr>
-    <th>Date</th>
-    <th>Amount Paid</th>
-    <th>Status</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="p : ${payments}">
-    <td th:text="${p.paymentDate}"></td>
-    <td th:text="${p.amountPaid}"></td>
-    <td>
-      <form th:action="@{/tenant-payments/mark-paid/{id}(id=${p.id})}" method="post">
-        <button th:text="${p.status}" th:class="${p.status.equals('Paid')} ? 'paid' : 'unpaid'"></button>
-      </form>
-    </td>
-  </tr>
-  </tbody>
-</table>
-
-<div th:if="${#lists.isEmpty(payments)}">
-  <p>No payments found.</p>
+<!-- Sidebar toggle button -->
+<div class="hamburger" onclick="toggleSidebar()">
+  <img src="/images/sidebar.svg" alt="Sidebar Menu" style="width: 35px; height: 30px;">
 </div>
+
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
+  <div class="profile">
+    <div class="user-info">
+      <div class="avatar">
+        <img src="/images/usericon.svg" alt="User Icon">
+      </div>
+      <div>
+        <strong th:text="${username}">Username</strong><br>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="menu-links">
+    <a th:href="@{/tenant-index}">
+      <img src="/images/dashboard.png" alt="Dashboard Icon"> Dashboard
+    </a>
+    <a th:href="@{/tenant-announcement}">
+      <img src="/images/announcements.png" alt="Announcements Icon"> Announcements
+    </a>
+    <a th:href="@{/tenant-payments/list}">
+      <img src="/images/payments.png" alt="Payments Icon"> Payments
+    </a>
+    <a th:href="@{/tenant/reports}">
+      <img src="/images/reports.png" alt="Reports Icon"> Add Complaints
+    </a>
+    <a th:href="@{/tenant-leave}">
+      <img src="/images/leaverequest.png" alt="Leave Request Icon"> Leave Request
+    </a>
+  </div>
+
+  <div class="logout">
+    <form th:action="@{/logout}" method="post">
+      <button type="submit">Logout</button>
+    </form>
+  </div>
+</div>
+
+<div class="container">
+  <h2 class="page-title">Payment History</h2>
+
+  <!-- YELLOW TAB -->
+  <div class="breadcrumb">Payments &gt; Tenant Payments</div>
+
+  <!-- Optional: show number of payments -->
+  <p style="color: black;" th:text="'Number of payments: ' + ${payments != null ? #lists.size(payments) : 0}"></p>
+
+
+  <div class="payment-box">
+    <table>
+      <thead>
+      <tr>
+        <th>Date</th>
+        <th>Amount Paid</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Payment Rows -->
+      <tr th:each="p : ${payments}">
+        <td th:text="${#temporals.format(p.paymentDate, 'MMMM dd, yyyy')}"></td>
+        <td th:text="'₱' + ${p.amountPaid}"></td>
+        <td>
+          <form th:action="@{/tenant-payments/mark-paid/{id}(id=${p.id})}" method="post">
+            <button
+                    th:text="${p.status}"
+                    th:class="${p.status.equals('Paid')} ? 'status-paid' : 'status-unpaid'">
+            </button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <!-- Empty State -->
+    <div th:if="${#lists.isEmpty(payments)}" style="margin-top: 20px;">
+      <p>No payments found.</p>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('active');
+  }
+</script>
 
 </body>
 </html>
